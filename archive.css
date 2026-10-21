@@ -70,16 +70,6 @@
   border-radius: var(--radius-pill);
 }
 
-/* Konsept projelerde "Concept design" sticker'ı (stili style.css'te): başlık ve etiketin hemen sağında */
-.archive-row__mark { position: relative; display: inline-block; }
-.archive-row__mark .concept-tag { left: calc(100% + 6px); top: 50%; width: 68px; height: 68px; translate: 0 -50%; }
-.archive-row__mark .concept-tag span { font-size: 8px; }
-/* Dar tablet: sütunlar daraldığında Rol'e taşmasın diye küçülür */
-@media (min-width: 641px) and (max-width: 760px) {
-  .archive-row__mark .concept-tag { left: calc(100% + 2px); width: 50px; height: 50px; }
-  .archive-row__mark .concept-tag span { font-size: 6.5px; }
-}
-
 /* Fareyi takip eden sticker önizlemesi */
 .archive-preview {
   position: fixed;
