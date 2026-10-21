@@ -163,40 +163,22 @@
 .project:hover .project__no { color: var(--pink); -webkit-text-stroke-color: var(--pink); }
 .project__no { transition: color 0.45s var(--ease), -webkit-text-stroke-color 0.45s; }
 
-/* ---------- İletişim: dönen rozet + bağlantılar ---------- */
+/* ---------- İletişim: ikonlu bağlantılar ---------- */
 
-.contact-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 24px 40px;
-}
+/* Üst boşluk: başlıktan inen okun ucu bağlantıların üstünde kalsın */
+.contact-actions { display: flex; flex-wrap: wrap; align-items: center; padding-top: clamp(40px, 6vw, 64px); }
 .contact-links { display: flex; flex-wrap: wrap; gap: 14px 32px; }
-.badge {
-  position: relative;
-  display: grid;
-  place-items: center;
+/* Maskotla aynı dilde: yuvarlak uçlu, ince kontur çizimler */
+.btn__icon {
   flex: none;
-  width: 132px;
-  height: 132px;
-  color: var(--ink);
-  text-decoration: none;
+  width: 1.25em;
+  height: 1.25em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
-.badge svg { position: absolute; inset: 0; animation: spin 14s linear infinite; }
-.badge svg text { fill: var(--ink); font-family: var(--font-label); }
-.badge span {
-  display: grid;
-  place-items: center;
-  width: 64px;
-  height: 64px;
-  font-size: 1.5rem;
-  border-radius: 50%;
-  background: var(--lime);
-  transition: scale 0.3s var(--ease), background-color 0.3s;
-}
-.badge:hover span,
-.badge:focus-visible span { scale: 1.12; background: var(--pink); }
-@keyframes spin { to { rotate: 360deg; } }
 
 /* Başlığın sonundan bağlantılara kıvrılan ok: başlıkla bağlantıları birbirine bağlar */
 .contact .display { position: relative; }
@@ -222,6 +204,5 @@
   .marker::before { transform: scaleX(1) rotate(-1deg); }
   .marker { background-size: 100% 72% !important; }
   .kmark { color: var(--ink); }
-  .marquee__track,
-  .badge svg { animation: none; }
+  .marquee__track { animation: none; }
 }

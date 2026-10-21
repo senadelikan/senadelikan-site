@@ -60,7 +60,7 @@
 
     'contact.kicker': '04 · Contact',
     'contact.heading': 'Let’s talk!',
-    'contact.badge': 'SEND AN EMAIL · SEND AN EMAIL ·',
+    'contact.email': 'Email',
 
     'archive.pageTitle': 'All projects · Sena Delikan',
     'archive.back': 'Home',
@@ -91,7 +91,6 @@
     'a11y.backToTop': 'Sena Delikan, back to top',
     'a11y.intro': 'Intro',
     'a11y.showcase': 'showcase',
-    'a11y.email': 'Send an email',
     'a11y.projectList': 'Project list',
   };
 
