@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sena Delikan · UI/UX Designer</title>
+  <meta name="description" content="Sena Delikan'ın portfolyosu. UI/UX ve Product Designer olma yolunda; Wholly gibi kişisel konsept projeler, tasarım süreci ve tasarım sistemi çalışmaları.">
+  <!-- Paylaşım önizlemesi. og:image adresi yayın adresi belli olunca tam adrese çevrilecek. -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sena Delikan · UI/UX Designer">
+  <meta property="og:description" content="Sena Delikan'ın portfolyosu. UI/UX ve Product Designer olma yolunda; Wholly gibi kişisel konsept projeler, tasarım süreci ve tasarım sistemi çalışmaları.">
+  <meta property="og:image" content="assets/meta/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="tr_TR">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/meta/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/meta/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/meta/apple-touch-icon.png">
+  <link rel="preload" as="image" href="assets/brand/9.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400..900&family=Syne:wght@400..800&family=Figtree:ital,wght@0,400..700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+  <script src="i18n.js?v=80"></script>
+  <link rel="stylesheet" href="tokens.css?v=80">
+  <link rel="stylesheet" href="style.css?v=80">
+  <link rel="stylesheet" href="showcase.css?v=80">
+  <link rel="stylesheet" href="type.css?v=80">
+  <link rel="stylesheet" href="accents.css?v=80">
+</head>
+<body class="is-loading">
+
+  <!-- Sabit sahne: maskot, bulut ve balon scroll boyunca burada yaşar -->
+  <div class="stage">
+    <!-- Üst menü: maskot solda logo gibi (girişten sonra .nav__slot'a yerleşir), bağlantılar sağda tek hapta -->
+    <header class="nav">
+      <a class="nav__brand" href="#merhaba" data-i18n-attr="aria-label:a11y.toIntro" aria-label="senadelikan, tanıtıma git">
+        <!-- Maskot yerleşince bu keskin, gerçek boyutlu görsel devralır (ölçeklenmiş çizim bulanık kalıyordu) -->
+        <span class="nav__slot" aria-hidden="true"><img class="nav__logo" src="assets/brand/9.svg" alt=""></span>
+        <span class="nav__name">senadelikan</span>
+      </a>
+      <nav class="nav__pill" aria-label="Ana menü" data-i18n-attr="aria-label:a11y.mainMenu">
+        <a class="squiggle-link" href="#projeler" data-i18n="nav.projects">Projeler</a>
+        <a class="squiggle-link" href="#hakkimda" data-i18n="nav.about">Hakkımda</a>
+        <a class="squiggle-link" href="#iletisim" data-i18n="nav.contact">İletişim</a>
+        <div class="lang" role="group" aria-label="Dil" data-i18n-attr="aria-label:a11y.lang">
+          <button type="button" aria-pressed="true">TR</button>
+          <button type="button" aria-pressed="false">EN</button>
+        </div>
+      </nav>
+    </header>
+
+    <button class="mascot" type="button" aria-label="Sena Delikan, ana sayfaya dön" data-i18n-attr="aria-label:a11y.backToTop" tabindex="-1">
+      <img class="cloud" src="assets/brand/9.5.svg" alt="">
+      <span class="frames"><!-- kareler JS ile eklenir --></span>
+      <img class="pink" src="assets/brand/9.svg" alt="">
+      <img class="hey" src="assets/brand/s2.svg" alt="Hey!">
+    </button>
+
+    <!-- Aşağı kaydırma ipucu: masaüstünde fare, dokunmatikte oklar -->
+    <div class="scroll-hint" aria-hidden="true">
+      <span class="scroll-hint__mouse"><span class="scroll-hint__wheel"></span></span>
+      <span class="scroll-hint__arrows"><i></i><i></i></span>
+      <span class="scroll-hint__text" data-i18n="intro.scroll">Kaydır</span>
+    </div>
+    <button class="skip" type="button" data-i18n="intro.skip">Geç</button>
+  </div>
+
+  <!-- Scroll mesafesini sağlayan boş alan (animasyon bu alanda oynar) -->
+  <section class="intro" aria-label="Giriş" data-i18n-attr="aria-label:a11y.intro"></section>
+
+  <main class="content">
+
+    <!-- Tanıtım -->
+    <section class="section section--hero" id="merhaba">
+      <div class="wrap">
+        <p class="label reveal" data-i18n="hero.kicker">Portfolyo · 2026</p>
+        <h1 class="hero-line reveal" data-i18n="hero.title">Merhaba, ben Sena. <span class="marker kmark" lang="en">UI/UX</span> ve <span class="marker marker--pink kmark" lang="en">Product Designer</span> olma yolunda ilerliyorum.</h1>
+        <div class="hero-actions reveal">
+          <a class="btn" href="#projeler"><span data-i18n="hero.projects">Projelerimi gör</span> <span aria-hidden="true">↓</span></a>
+          <a class="btn btn--ghost" href="assets/cv/Sena-Delikan-CV.pdf" download="Sena-Delikan-CV.pdf" data-i18n="cv">CV'mi indir</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kayan şerit (kinetik vurgu) -->
+    <div class="marquee-clip" aria-hidden="true"><div class="marquee"><span class="marquee__track"><span class="marquee__group" data-i18n="marquee">MERHABA ✦ PORTFOLYOMA HOŞ GELDİN ✦ BİRLİKTE ÜRETELİM ✦&nbsp;</span></span></div></div>
+
+    <!-- Projeler: sabitlenen yatay vitrin (A24 esintisi). İçerik projects.js'ten üretilir. -->
+    <section class="showcase" id="projeler" aria-roledescription="vitrin" aria-label="Projeler" data-i18n-attr="aria-roledescription:a11y.showcase, aria-label:nav.projects">
+      <div class="showcase__pin">
+        <div class="showcase__credits">
+          <p class="label showcase__kicker"><span data-i18n="projects.kicker">01 · Projeler</span><span class="showcase__count" aria-hidden="true"></span></p>
+          <span class="showcase__no" aria-hidden="true"></span>
+          <div class="showcase__title-mask"><h2 class="showcase__title"></h2></div>
+          <dl class="showcase__rows">
+            <div><dt class="label" data-i18n="projects.role">Rol</dt><dd data-field="role"></dd></div>
+            <div><dt class="label" data-i18n="projects.year">Yıl</dt><dd data-field="year"></dd></div>
+            <div><dt class="label" data-i18n="projects.tools">Araçlar</dt><dd data-field="tools"></dd></div>
+          </dl>
+          <a class="btn showcase__all" href="projects.html"><span data-i18n="projects.all">Bütün projeler</span> <span class="showcase__all-count"></span> <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="showcase__stage">
+          <svg class="showcase__ring" aria-hidden="true"><path /></svg>
+          <div class="showcase__track"></div>
+        </div>
+
+        <div class="showcase__result">
+          <p class="showcase__value"></p>
+          <p class="label showcase__value-label"></p>
+          <blockquote class="showcase__quote"><p></p><cite class="label"></cite></blockquote>
+        </div>
+
+        <span class="showcase__edge showcase__edge--left label" aria-hidden="true" data-i18n="projects.edge">Portfolyo</span>
+        <span class="showcase__edge showcase__edge--right label" aria-hidden="true"></span>
+        <p class="sr-only showcase__live" aria-live="polite"></p>
+      </div>
+
+      <!-- Azaltılmış hareket: vitrin yerine düz, dikey liste -->
+      <div class="project-list wrap">
+        <header class="section__head">
+          <span class="label" data-i18n="projects.kicker">01 · Projeler</span>
+          <h2 data-i18n="projects.heading">Seçili işler</h2>
+          <p><a class="btn" href="projects.html"><span data-i18n="projects.all">Bütün projeler</span> →</a></p>
+        </header>
+      </div>
+    </section>
+
+    <!-- Hakkımda -->
+    <section class="section" id="hakkimda">
+      <div class="wrap">
+        <header class="section__head reveal">
+          <span class="label" data-i18n="about.kicker">02 · Hakkımda</span>
+          <h2 data-i18n="about.heading">Biraz ben</h2>
+        </header>
+        <div class="about">
+          <img class="portrait reveal" src="assets/photo/sena.webp" alt="Sena Delikan" width="1814" height="1814">
+          <div class="reveal">
+            <p class="lead" data-i18n="about.p1">İşletme mezunu olsam da hayatımda tasarımın hep büyük bir yeri oldu. Hobi olarak bir şeyler üretmekle başlayan bu merak, Max FM ve YouReply'daki stajlarla gerçek bir işe dönüştü.</p>
+            <p class="lead" data-i18n="about.p2">Ardından enerji piyasalarında çalıştım; bu bana bambaşka bir alanı içeriden görme fırsatı verdi. Şimdi bu iki dünyayı, insanların işini kolaylaştıran arayüzler tasarlarken bir araya getirmek istiyorum.</p>
+            <p class="label" data-i18n="about.tools">Araçlarım</p>
+            <p class="chips" lang="en"><span class="chip">Figma</span><span class="chip">Clip Studio</span><span class="chip">Photoshop</span><span class="chip">Illustrator</span><span class="chip">InDesign</span><span class="chip">Notion</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Süreç -->
+    <section class="section section--white" id="surec">
+      <div class="wrap">
+        <header class="section__head reveal">
+          <span class="label" data-i18n="process.kicker">03 · Süreç</span>
+          <h2 data-i18n="process.heading">Nasıl çalışıyorum?</h2>
+        </header>
+        <ol class="process">
+          <li class="step reveal"><div class="step__head"><span class="label">01</span><h3 class="h3" data-i18n="process.1.title">Dinle</h3></div><p data-i18n="process.1.text">Önce soruyu anlamaya çalışırım: kimin için, hangi sorun?</p></li>
+          <li class="step reveal"><div class="step__head"><span class="label">02</span><h3 class="h3" data-i18n="process.2.title">Karala</h3></div><p data-i18n="process.2.text">Kâğıtta hızlı eskizler; çok fikir, az bağlılık.</p></li>
+          <li class="step reveal"><div class="step__head"><span class="label">03</span><h3 class="h3" data-i18n="process.3.title">Kur</h3></div><p data-i18n="process.3.text">En güçlü fikri Figma'da tıklanabilir prototipe dönüştürürüm.</p></li>
+          <li class="step reveal"><div class="step__head"><span class="label">04</span><h3 class="h3" data-i18n="process.4.title">Dene</h3></div><p data-i18n="process.4.text">Prototipi başkalarına denetir, takıldıkları yerleri düzeltirim.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- İletişim -->
+    <section class="section section--contact" id="iletisim">
+      <div class="wrap">
+        <span class="label reveal" data-i18n="contact.kicker">04 · İletişim</span>
+        <div class="contact">
+          <h2 class="display reveal"><span class="marker kmark" data-i18n="contact.heading">Tanışalım!</span></h2>
+          <div class="waver" aria-hidden="true">
+            <img class="waver__mascot" src="assets/brand/9.svg" alt="">
+            <img class="waver__hey" src="assets/brand/s2.svg" alt="">
+          </div>
+        </div>
+        <div class="contact-actions reveal">
+          <a class="badge" href="mailto:senadelikan3@gmail.com" aria-label="E-posta gönder" data-i18n-attr="aria-label:a11y.email">
+            <svg viewBox="0 0 132 132" aria-hidden="true"><defs><path id="badge-circle" d="M66,66 m-52,0 a52,52 0 1,1 104,0 a52,52 0 1,1 -104,0"/></defs><text font-size="11" letter-spacing="3.2"><textPath href="#badge-circle" data-i18n="contact.badge">E-POSTA GÖNDER · E-POSTA GÖNDER ·</textPath></text></svg>
+            <span aria-hidden="true">↗</span>
+          </a>
+          <div class="contact-links">
+            <a class="btn" href="https://www.linkedin.com/in/sena-delikan" target="_blank" rel="noopener">LinkedIn ↗</a>
+            <a class="btn" href="https://www.behance.net/senadelikan" target="_blank" rel="noopener">Behance ↗</a>
+            <a class="btn btn--ghost" href="assets/cv/Sena-Delikan-CV.pdf" download="Sena-Delikan-CV.pdf"><span data-i18n="cv">CV'mi indir</span> ↓</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="wrap">
+        <span class="label">© 2026 Sena Delikan</span>
+      </div>
+    </footer>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="main.js?v=80"></script>
+  <script src="projects.js?v=80"></script>
+  <script src="showcase.js?v=80"></script>
+  <script src="accents.js?v=80"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+/* Tipografi kuralı (v2)
+ * Başlıklar ve büyük yazılar: Unbounded (--font-display)
+ * Etiket kutusundaki vurgulu kelimeler (UI/UX, Product Designer…): Syne (--font-accent)
+ * Gövde Figtree, küçük etiketler JetBrains Mono olarak kalır.
+ * Bu dosya bütün sayfalarda en son yüklenir; Unbounded geniş olduğu için
+ * boyutlar daha küçük, harf aralığı Bricolage'a göre daha açık. */
+
+.display, .h1, .h2, .h3, h1, h2, h3,
+.hero-line,
+.nav__name, .case-nav__name,
+.project__no,
+.showcase__title, .showcase__value,
+.case-hero__title, .case-result__value, .case-next__title,
+.archive-hero__title, .archive-row__title {
+  letter-spacing: -0.02em;
+}
+
+.display, .case-hero__title, .archive-hero__title { font-weight: 700; }
+.hero-line { font-weight: 600; line-height: 1.22; }
+
+.nav__name, .case-nav__name { font-size: clamp(1rem, 0.85rem + 0.5vw, 1.3rem); }
+
+.showcase__title { font-size: clamp(1.375rem, 1rem + 1.2vw, 2.125rem); line-height: 1.1; min-height: 2.2em; }
+.showcase__value { font-size: clamp(2rem, 1.3rem + 2vw, 3.25rem); letter-spacing: -0.03em; }
+.case-result__value { font-size: clamp(2.75rem, 1.6rem + 4.8vw, 5.5rem); letter-spacing: -0.03em; }
+.project__no { font-size: clamp(2.75rem, 5.5vw, 4.75rem); }
+.archive-row__title { font-size: clamp(1.0625rem, 0.85rem + 0.9vw, 1.625rem); }
+
+/* Vurgulu kelimeler: Syne */
+.tag {
+  font-family: var(--font-accent);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}

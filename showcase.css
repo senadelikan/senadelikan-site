@@ -1,0 +1,209 @@
+/* Projeler vitrini (v2 · A24 esintisi) */
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.showcase {
+  position: relative;
+  /* Sahne başlık boşluğunu kendisi taşıdığı için bağlantılar tam vitrinin başına insin */
+  scroll-margin-top: calc(-1 * (var(--head-h) + 16px));
+  border-top: 1px solid var(--line);
+  background-color: color-mix(in srgb, var(--white) 70%, transparent);
+  /* Masaüstünde yükseklik JS ile: 1 ekran + proje başına ~70 ekran yüksekliği */
+}
+
+/* ---------- Masaüstü: sabit sahne ---------- */
+
+.showcase__pin {
+  --st-w: min(38vw, 500px, calc((100svh - var(--head-h) - 80px) * 1.15));
+  --st-h: calc(var(--st-w) * 0.75);
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.showcase__credits {
+  position: absolute;
+  z-index: 3;
+  top: calc(var(--head-h) + 20px);
+  left: var(--gutter);
+  width: min(300px, 25vw);
+}
+.showcase__kicker {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 14px;
+}
+.showcase__count { color: var(--ink); white-space: nowrap; }
+.showcase__title-mask { overflow: hidden; padding-bottom: 0.08em; }
+.showcase__title {
+  font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.75rem);
+  line-height: 1.02;
+  min-height: 2.04em; /* iki satır yer ayır: başlık değişince satırlar zıplamasın */
+}
+.showcase__rows { margin: 18px 0 0; }
+.showcase__rows > div {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 9px 0;
+  border-top: 1px solid var(--line);
+}
+.showcase__rows > div:last-child { border-bottom: 1px solid var(--line); }
+.showcase__rows dd { margin: 0; font-weight: 500; font-size: var(--fs-small); }
+/* Arşive giden buton: künyenin altında, sayfanın diğer butonlarıyla aynı boyda */
+.showcase__all { margin-top: 24px; }
+.showcase__all-count {
+  padding: 3px 7px;
+  font: 500 0.6875rem/1 var(--font-label);
+  letter-spacing: 0.04em;
+  background: var(--white);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-pill);
+}
+.is-swipe .showcase__all { align-self: flex-start; }
+
+.showcase__stage {
+  position: absolute;
+  z-index: 1; /* sticker'lar künye, sonuç ve kenar yazılarının altında kalır */
+  inset: var(--head-h) 0 24px 0;
+}
+
+.showcase__track { position: absolute; inset: 0; perspective: 1400px; }
+
+.showcase__item.sticker {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--st-w);
+  height: var(--st-h);
+  margin: calc(var(--st-h) / -2) 0 0 calc(var(--st-w) / -2);
+  rotate: 0deg;
+  will-change: transform, opacity;
+}
+.showcase__item.sticker:hover { rotate: -1.5deg; translate: 0 -6px; }
+
+/* El çizimi halka: aktif sticker'ın etrafına çizilir */
+.showcase__ring {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+}
+.showcase__ring path {
+  fill: none;
+  stroke: var(--pink);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.showcase__result {
+  position: absolute;
+  z-index: 3;
+  right: var(--gutter);
+  bottom: 48px;
+  width: min(270px, 24vw);
+}
+.showcase__value {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 1.6rem + 2.6vw, 4rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+.showcase__value-label { margin: 8px 0 18px; color: var(--ink); }
+.showcase__quote { margin: 0; padding-top: 14px; border-top: 1px solid var(--line); }
+.showcase__result:not(.has-value) .showcase__quote { padding-top: 0; border-top: 0; } /* sayı yoksa üst çizgi de yok */
+.showcase__quote p { margin: 0 0 8px; font-size: var(--fs-small); line-height: 1.5; }
+.showcase__quote cite { font-style: normal; }
+
+/* Kenar etiketleri: dikey yazı */
+.showcase__edge {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  writing-mode: vertical-rl;
+  color: var(--ink);
+}
+.showcase__edge--left { left: 14px; transform: translateY(-50%) rotate(180deg); }
+.showcase__edge--right { right: 14px; transform: translateY(-50%); }
+
+/* Azaltılmış hareketteki dikey liste: varsayılan gizli */
+.project-list { display: none; padding-top: clamp(72px, 10vw, 140px); padding-bottom: clamp(48px, 8vw, 96px); }
+
+/* ---------- Mobil: parmakla kaydırılan tek kart ---------- */
+
+.showcase.is-swipe { padding: clamp(56px, 12vw, 80px) 0 48px; }
+.is-swipe .showcase__pin {
+  position: static;
+  height: auto;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.is-swipe .showcase__credits,
+.is-swipe .showcase__result {
+  position: static;
+  width: auto;
+  padding: 0 var(--gutter);
+}
+.is-swipe .showcase__title { min-height: 0; }
+.is-swipe .showcase__rows {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 16px;
+}
+.is-swipe .showcase__rows > div { grid-template-columns: 1fr; gap: 2px; }
+.is-swipe .showcase__rows > div:last-child { grid-column: 1 / -1; } /* tek sayıda satır: son satır tam genişlik */
+.is-swipe .showcase__stage { position: static; }
+.is-swipe .showcase__ring,
+.is-swipe .showcase__edge { display: none; }
+.is-swipe .showcase__track {
+  position: static;
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 11vw;
+  padding: 16px 11vw 24px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.is-swipe .showcase__track::-webkit-scrollbar { display: none; }
+.is-swipe .showcase__item.sticker {
+  position: relative;
+  left: auto; top: auto;
+  flex: none;
+  width: 78vw;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  margin: 0;
+  scroll-snap-align: center;
+  rotate: var(--tilt, 0deg);
+}
+.is-swipe .showcase__item .concept-tag { top: -8px; right: -10px; width: 80px; height: 80px; } /* kaydırma şeridinin üst kenarında kesilmesin */
+.is-swipe .showcase__item .concept-tag span { font-size: 9px; }
+.is-swipe .showcase__value { font-size: 2.5rem; }
+
+/* ---------- Azaltılmış hareket ---------- */
+
+.reduced .showcase__pin { display: none; }
+.reduced .project-list { display: block; }
+.reduced .showcase { height: auto !important; }
+

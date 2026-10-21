@@ -1,0 +1,41 @@
+/* Tasarım token'ları · stil sayfası ve gerçek site bunu paylaşır */
+
+:root {
+  /* Renk: kâğıt ve mürekkep + iki işaretleme kalemi */
+  --paper: #F8F9F7;
+  --white: #FFFFFF;
+  --ink: #0C0C0D;
+  --ink-soft: color-mix(in srgb, var(--ink) 64%, var(--paper)); /* ikincil metin, 6.0:1 */
+  --line: color-mix(in srgb, var(--ink) 10%, transparent);
+  --grid-line: color-mix(in srgb, var(--ink) 4.5%, transparent);
+  --pink: #FF76B7;       /* yalnızca çizim ve şekil; metin rengi değil */
+  --pink-dark: #EC4982;  /* etkileşim: alt çizgi, hover, odak, aktif */
+  --lime: #D0FFA4;       /* etiket kutusu ve buton zemini; üstündeki yazı daima --ink */
+
+  /* Tipografi (Unbounded geniş olduğu için başlık ölçeği Bricolage'a göre ~%20 küçük) */
+  /* Kural: başlıklar ve büyük yazılar Unbounded; etiket kutusundaki vurgulu kelimeler Syne */
+  --font-display: "Unbounded", ui-sans-serif, system-ui, sans-serif;
+  --font-accent: "Syne", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-label: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --fs-display: clamp(2.5rem, 1.6rem + 4vw, 5.25rem);
+  --fs-h1: clamp(2rem, 1.45rem + 2.7vw, 3.6rem);
+  --fs-h2: clamp(1.625rem, 1.3rem + 1.6vw, 2.6rem);
+  --fs-h3: clamp(1.125rem, 1rem + 0.5vw, 1.4rem);
+  --fs-lead: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.875rem;
+  --fs-label: 0.75rem;
+
+  /* Yerleşim */
+  --gutter: clamp(16px, 4vw, 56px);
+  --col-gap: clamp(12px, 2vw, 24px);
+  --max: 1280px;
+  --radius: 18px;
+  --radius-pill: 999px;
+
+  /* Hareket */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1); /* power2.out tadında */
+  --dur: 0.5s;
+}

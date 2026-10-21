@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="archive.pageTitle">Bütün projeler · Sena Delikan</title>
+  <meta name="description" content="Sena Delikan'ın bütün projeleri ve konsept çalışmaları.">
+  <!-- Paylaşım önizlemesi. og:image adresi yayın adresi belli olunca tam adrese çevrilecek. -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Bütün projeler · Sena Delikan">
+  <meta property="og:description" content="Sena Delikan'ın bütün projeleri ve konsept çalışmaları.">
+  <meta property="og:image" content="assets/meta/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="tr_TR">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/meta/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/meta/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/meta/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400..900&family=Syne:wght@400..800&family=Figtree:ital,wght@0,400..700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+  <script src="i18n.js?v=80"></script>
+  <link rel="stylesheet" href="tokens.css?v=80">
+  <link rel="stylesheet" href="style.css?v=80">
+  <link rel="stylesheet" href="case.css?v=80">
+  <link rel="stylesheet" href="archive.css?v=80">
+  <link rel="stylesheet" href="type.css?v=80">
+  <link rel="stylesheet" href="accents.css?v=80">
+</head>
+<body class="case-page">
+
+  <header class="case-nav">
+    <a class="case-nav__brand" href="index.html" aria-label="senadelikan, ana sayfa" data-i18n-attr="aria-label:a11y.home">
+      <img src="assets/brand/9.svg" alt="">
+      <span class="case-nav__name">senadelikan</span>
+    </a>
+    <div class="case-nav__pill">
+      <a class="squiggle-link case-nav__back" href="index.html#projeler"><span aria-hidden="true">←</span> <span data-i18n="archive.back">Ana sayfa</span></a>
+      <span class="label case-nav__count" data-slot="total"></span>
+      <div class="lang" role="group" aria-label="Dil" data-i18n-attr="aria-label:a11y.lang">
+        <button type="button" aria-pressed="true">TR</button>
+        <button type="button" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="content archive">
+    <section class="archive-hero wrap">
+      <p class="label archive-reveal" data-i18n="archive.kicker">Arşiv</p>
+      <h1 class="archive-hero__title archive-reveal" data-i18n="archive.heading">Bütün projeler</h1>
+      <p class="lead archive-reveal" data-slot="summary"></p>
+    </section>
+
+    <section class="wrap" aria-label="Proje listesi" data-i18n-attr="aria-label:a11y.projectList">
+      <div class="archive-head label" aria-hidden="true">
+        <span data-i18n="archive.colNo">No</span><span data-i18n="archive.colProject">Proje</span><span data-i18n="archive.colRole">Rol</span><span data-i18n="archive.colYear">Yıl</span>
+      </div>
+      <ol class="archive-list"></ol>
+    </section>
+
+    <!-- Üzerine gelinen projenin sticker önizlemesi (yalnızca fareyle) -->
+    <div class="archive-preview" aria-hidden="true"></div>
+
+    <footer class="footer">
+      <div class="wrap">
+        <span class="label">© 2026 Sena Delikan</span>
+      </div>
+    </footer>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="projects.js?v=80"></script>
+  <script src="archive.js?v=80"></script>
+</body>
+</html>

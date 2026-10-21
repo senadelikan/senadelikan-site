@@ -1,0 +1,215 @@
+/* Editoryal + kinetik vurgular (v2)
+ * Neo-brutalist butonlar ve kutular yerine: sade, alt çizgili bağlantılar,
+ * fosforlu kalem izleri, kontur hâlinden dolan kelimeler, kayan şerit ve dönen rozet.
+ * Bu dosya bütün sayfalarda en son yüklenir. */
+
+/* ---------- Fosforlu kalem izi: kelimenin arkasına soldan sağa çizilir ---------- */
+
+.marker {
+  position: relative;
+  z-index: 0;
+  white-space: nowrap;
+}
+.marker::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -0.12em; right: -0.12em;
+  top: 0.2em; bottom: 0.04em;
+  background: var(--mc, var(--lime));
+  /* Kenarları elle çekilmiş gibi düzensiz */
+  clip-path: polygon(1% 18%, 12% 8%, 30% 12%, 52% 4%, 74% 10%, 96% 6%, 100% 30%, 98% 62%, 100% 92%, 82% 88%, 60% 96%, 38% 90%, 18% 97%, 2% 88%, 0% 55%);
+  transform: scaleX(0) rotate(-1deg);
+  transform-origin: left center;
+  transition: transform 0.9s var(--ease);
+}
+.marker--pink { --mc: var(--pink); }
+.marker.is-in::before { transform: scaleX(1) rotate(-1deg); }
+
+/* ---------- Kontur hâlinden mürekkebe dolan vurgu kelimesi (Syne) ---------- */
+
+.kmark {
+  font-family: var(--font-accent);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink);
+  transition: color 0.6s var(--ease);
+}
+.kmark.is-in { color: var(--ink); }
+.kmark::before { transition-delay: 0.45s; }
+.marker--pink.kmark { transition-delay: 0.3s; }
+.marker--pink.kmark::before { transition-delay: 0.8s; }
+
+/* Dar ekran: kalem izli kelimeler satıra bölünebilir; iz her satırın arkasına ayrı çizilir */
+@media (max-width: 640px) {
+  .marker {
+    white-space: normal;
+    padding: 0 0.1em;
+    background: linear-gradient(var(--mc, var(--lime)), var(--mc, var(--lime))) left 85% / 0% 72% no-repeat;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    transition: color 0.6s var(--ease), background-size 0.9s var(--ease);
+  }
+  .marker::before { display: none; }
+  .marker.is-in { background-size: 100% 72%; }
+}
+
+/* ---------- Butonlar: editoryal bağlantı (alt çizgi + üstüne gelince kalem izi) ---------- */
+
+.btn {
+  position: relative;
+  z-index: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 2px;
+  font: 600 1.0625rem/1.2 var(--font-body);
+  color: var(--ink);
+  text-decoration: none;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid var(--ink);
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
+  transition: none;
+}
+.btn::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -6px; right: -6px;
+  top: 45%; bottom: -2px;
+  background: var(--lime);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.4s var(--ease);
+}
+.btn:hover, .btn:active { transform: none; box-shadow: none; }
+.btn:hover::before, .btn:focus-visible::before { transform: scaleX(1); }
+.btn--ghost { background: none; }
+.btn--ghost::before { background: color-mix(in srgb, var(--pink) 55%, transparent); }
+
+.hero-actions { gap: 14px 32px; }
+
+/* "Bütün projeler": diğer bağlantılardan büyük, yanında proje sayısı */
+.showcase__all.btn { margin-top: 24px; font-size: 1.125rem; border-bottom-width: 3px; }
+.showcase__all-count {
+  padding: 3px 7px;
+  font: 500 0.6875rem/1 var(--font-label);
+  letter-spacing: 0.04em;
+  background: var(--lime);
+  border: 0;
+  border-radius: var(--radius-pill);
+}
+
+/* Görselin üstündeki buton: kenarlıksız, koyu, yumuşak hap */
+.case-cover__btn.btn {
+  padding: 13px 22px;
+  color: var(--white);
+  background: var(--ink);
+  border: 0;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 12px 28px -12px rgb(0 0 0 / 0.55);
+}
+.case-cover__btn.btn::before { display: none; }
+
+/* ---------- Küçük etiketler: kenarlıksız ---------- */
+
+.chip--lime,
+.archive-row__star { border-color: transparent; border-width: 0; }
+.archive-row__star { padding: 4px 8px; }
+
+/* ---------- Kayan şerit ---------- */
+
+/* Eğik şerit kenarlardan taşar; kapsayıcı kırpar ki sayfa yana genişlemesin (mobil) */
+.marquee-clip {
+  overflow: hidden;
+  padding: clamp(16px, 3vw, 32px) 0 clamp(48px, 7vw, 88px);
+}
+.marquee {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  margin: 0 -3vw;
+  padding: 16px 0;
+  background: var(--lime);
+  white-space: nowrap;
+  rotate: -1.5deg;
+}
+.marquee__track {
+  display: inline-flex;
+  font: 700 clamp(1.125rem, 0.9rem + 0.8vw, 1.5rem)/1 var(--font-display);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  animation: marquee var(--marquee-dur, 22s) linear infinite;
+}
+.marquee__group { flex: none; white-space: pre; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* ---------- Dev kontur proje numarası (üstüne gelince pembe dolar) ---------- */
+
+.showcase__no {
+  display: block;
+  margin: -4px 0 10px;
+  font: 800 clamp(3rem, 2rem + 3.2vw, 5.25rem)/0.85 var(--font-display);
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink);
+  transition: color 0.45s var(--ease), -webkit-text-stroke-color 0.45s;
+}
+.showcase.is-hovering .showcase__no,
+.project:hover .project__no { color: var(--pink); -webkit-text-stroke-color: var(--pink); }
+.project__no { transition: color 0.45s var(--ease), -webkit-text-stroke-color 0.45s; }
+
+/* ---------- İletişim: dönen rozet + bağlantılar ---------- */
+
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px 40px;
+}
+.contact-links { display: flex; flex-wrap: wrap; gap: 14px 32px; }
+.badge {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 132px;
+  height: 132px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.badge svg { position: absolute; inset: 0; animation: spin 14s linear infinite; }
+.badge svg text { fill: var(--ink); font-family: var(--font-label); }
+.badge span {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  background: var(--lime);
+  transition: scale 0.3s var(--ease), background-color 0.3s;
+}
+.badge:hover span,
+.badge:focus-visible span { scale: 1.12; background: var(--pink); }
+@keyframes spin { to { rotate: 360deg; } }
+
+/* Dar ekran: tek kelimelik iletişim başlığı ("Tanışalım!") bölünemez; maskot alta geçsin */
+@media (max-width: 640px) {
+  .contact { flex-wrap: wrap; }
+  .contact .waver { margin: 0 64px 0 auto; } /* sağdaki "Hey!" balonuna yer kalsın */
+}
+
+/* ---------- Azaltılmış hareket: hepsi baştan çizili, şerit ve rozet durur ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .marker::before { transform: scaleX(1) rotate(-1deg); }
+  .marker { background-size: 100% 72% !important; }
+  .kmark { color: var(--ink); }
+  .marquee__track,
+  .badge svg { animation: none; }
+}
