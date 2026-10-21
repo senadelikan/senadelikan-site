@@ -198,10 +198,22 @@
 .badge:focus-visible span { scale: 1.12; background: var(--pink); }
 @keyframes spin { to { rotate: 360deg; } }
 
-/* Dar ekran: tek kelimelik iletişim başlığı ("Tanışalım!") bölünemez; maskot alta geçsin */
+/* Başlığın sonundan bağlantılara kıvrılan ok: başlıkla bağlantıları birbirine bağlar */
+.contact .display { position: relative; }
+.contact__arrow {
+  position: absolute;
+  right: -0.15em;
+  top: 92%;
+  width: clamp(56px, 8vw, 92px);
+  color: var(--pink-dark);
+  pointer-events: none;
+}
+
+/* Dar ekran: tek kelimelik iletişim başlığı ("Tanışalım!") bölünemez; maskot başlığın üstüne geçsin,
+   böylece başlık bağlantılara bitişik kalır ve ok araya giren maskota değil bağlantılara bakar */
 @media (max-width: 640px) {
   .contact { flex-wrap: wrap; }
-  .contact .waver { margin: 0 64px 0 auto; } /* sağdaki "Hey!" balonuna yer kalsın */
+  .contact .waver { order: -1; margin: 0 64px 0 auto; } /* sağdaki "Hey!" balonuna yer kalsın */
 }
 
 /* ---------- Azaltılmış hareket: hepsi baştan çizili, şerit ve rozet durur ---------- */
