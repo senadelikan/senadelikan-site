@@ -30,7 +30,7 @@
     <li>
       <a class="archive-row" href="case.html?p=${p.slug}&amp;from=arsiv" data-slug="${p.slug}">
         <span class="label archive-row__no">${pad(i + 1)}</span>
-        <span class="archive-row__title">${p.title}${p.featured ? `<span class="archive-row__star">${t('archive.featured', 'Ana sayfada')}</span>` : ''}</span>
+        <span class="archive-row__title"><span class="archive-row__mark">${p.title}${p.featured ? `<span class="archive-row__star">${t('archive.featured', 'Ana sayfada')}</span>` : ''}${p.concept ? window.conceptTagHTML() : ''}</span></span>
         <span class="archive-row__role" data-year="${p.year}">${p.role}</span>
         <span class="label archive-row__year">${p.year}</span>
         <span class="archive-row__arrow" aria-hidden="true">→</span>
