@@ -229,6 +229,15 @@ body.is-loading { overflow: hidden; touch-action: none; }
 .is-docked .nav__brand,
 .is-docked .nav__pill { pointer-events: auto; }
 
+/* Aşağı kaydırırken menü yukarı saklanır, yukarı kaydırınca geri gelir (nav-hide.js).
+   Ana sayfada yalnızca maskot menüye yerleştikten sonra. */
+.nav, .case-nav { transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.is-docked.is-nav-hidden .nav,
+.is-nav-hidden .case-nav { transform: translateY(-100%); }
+@media (prefers-reduced-motion: reduce) {
+  .nav, .case-nav { transition: none; }
+}
+
 .nav__brand {
   display: flex;
   align-items: center;

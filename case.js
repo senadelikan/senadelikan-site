@@ -37,7 +37,7 @@
     kicker: `${t('case.kicker', 'Vaka çalışması')} · ${pad(index + 1)}`,
     title: p.logo ? `<img src="${p.logo}" alt="${p.title}" width="204" height="59">` : p.title,
     summary: p.summary,
-    year: p.year,
+    year: p.caseYear || p.year,
     category: CATS[p.category] || p.category,
     role: p.role,
     tools: p.tools,

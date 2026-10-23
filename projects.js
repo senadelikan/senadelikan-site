@@ -41,4 +41,24 @@ window.PROJECTS = [
     // Görsellerin içindeki yazılar İngilizce (Behance'ten).
     case: [], // bütün vaka bölümleri story-wholly.js'te
   },
+  {
+    slug: 'wereply',
+    title: 'WeReply',
+    featured: true,
+    category: 'uiux',
+    year: '2024–2026',
+    caseYear: L('2024 staj<br>2026 <span lang="en">concept design</span>', '2024 internship<br>2026 concept design'), // vaka künyesinde iki satır; arşiv ve sıralama year'ı kullanır
+    role: L('UI/UX tasarım', 'UI/UX design'),
+    tools: 'Figma, Claude',
+    // Taslak metin: case-study.md'den; Sena metinleri yeniden yazacak
+    summary: L('Bir araştırma katılım uygulamasında anket akışının yeniden tasarımı. YouReply stajımda başladığım, uygulanmamış bir konsept.',
+      'Redesign of the survey flow in a research-participation app. Concept work from my internship at YouReply, not shipped.'),
+    // Alıntı yok: yerine kapaktaki slogan
+    quote: { text: 'Find. Answer. Get paid.', by: 'WeReply', lang: 'en' },
+    art: { bg: '#FE9820', img: 'assets/projects/wereply/cover.jpg?v=2' }, // kapak: /Users/mac/Projects/wereply/cover/cover.html, tools/snap.swift ile 600×469 @1 → 1200×938
+    concept: true, // YouReply bu tasarımları kullanmadı
+    caseCover: false,
+    link: null,
+    case: [], // bütün vaka bölümleri story-wereply.js'te
+  },
 ];
