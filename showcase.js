@@ -7,7 +7,8 @@
   const section = document.querySelector('.showcase');
   if (!section || !window.PROJECTS) return;
 
-  const SCREENS_PER_PROJECT = 0.7; // her proje için scroll mesafesi (ekran yüksekliği)
+  const SCREENS_PER_PROJECT = 0.7; // bir projeden ötekine geçişin scroll mesafesi (ekran yüksekliği)
+  const HOLD_SCREENS = 0.5; // geçişten sonra yeni proje bu kadar yerinde bekler (halka çizilir), sonra sayfa devam eder
 
   const $ = (s) => section.querySelector(s);
   const pin = $('.showcase__pin');
@@ -179,8 +180,27 @@
 
   function desktop() {
     const n = items.length;
-    const steps = Math.max(n - 1, 1);
-    section.style.height = `calc(100svh + ${(n - 1) * SCREENS_PER_PROJECT * 100}svh)`;
+    const T = SCREENS_PER_PROJECT;
+    const H = HOLD_SCREENS;
+    const U = Math.max((n - 1) * (T + H), 0.0001); // toplam scroll birimi
+    section.style.height = `calc(100svh + ${(n - 1) * (T + H) * 100}svh)`;
+
+    // Scroll ilerlemesi → vitrin konumu: her geçişten (T) sonra bir bekleme (H) gelir, orada konum sabit kalır
+    const posAt = (progress) => {
+      const u = progress * U;
+      const k = Math.floor(u / (T + H));
+      return Math.min(n - 1, k + Math.min((u - k * (T + H)) / T, 1));
+    };
+    // i. projenin yerine oturduğu ilerleme (beklemenin başı)
+    const progressFor = (i) => (i <= 0 ? 0 : ((i - 1) * (T + H) + T) / U);
+    // Geçişin ortasında bırakılırsa en yakın projeye oturur; beklemede bırakılırsa olduğu yerde kalır
+    const snapTo = (v) => {
+      const u = v * U;
+      const k = Math.floor(u / (T + H));
+      const r = u - k * (T + H);
+      if (k >= n - 1 || r >= T) return v;
+      return (r / T < 0.5 ? k * (T + H) : k * (T + H) + T) / U;
+    };
 
     const state = { p: 0 };
     let ringShown = false;
@@ -223,10 +243,10 @@
       end: 'bottom bottom',
       invalidateOnRefresh: true,
       snap: n > 1 ? {
-        snapTo: 1 / steps, duration: { min: 0.25, max: 0.6 }, delay: 0.08, ease: 'power2.out',
+        snapTo, duration: { min: 0.25, max: 0.6 }, delay: 0.08, ease: 'power2.out',
       } : false,
       onUpdate(self) {
-        const target = self.progress * (n - 1);
+        const target = posAt(self.progress);
         setActive(Math.round(target));
         gsap.to(state, { p: target, duration: 0.5, ease: 'power3.out', overwrite: true, onUpdate: layout });
       },
@@ -243,7 +263,7 @@
       target = i;
       scroller.y = window.scrollY;
       gsap.to(scroller, {
-        y: st.start + (i / steps) * (st.end - st.start),
+        y: st.start + progressFor(i) * (st.end - st.start),
         duration: 0.7,
         ease: 'power2.inOut',
         overwrite: true,
