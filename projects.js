@@ -55,7 +55,7 @@ window.PROJECTS = [
       'Redesign of the survey flow in a research-participation app. Concept work from my internship at YouReply, not shipped.'),
     // Alıntı yok: yerine kapaktaki slogan
     quote: { text: 'Find. Answer. Get paid.', by: 'WeReply', lang: 'en' },
-    art: { bg: '#FE9820', img: 'assets/projects/wereply/cover.jpg?v=2' }, // kapak: /Users/mac/Projects/wereply/cover/cover.html, tools/snap.swift ile 600×469 @1 → 1200×938
+    art: { bg: '#303C3C', img: 'assets/projects/wereply/cover.jpg?v=3' }, // kapak: /Users/mac/Projects/wereply/cover/cover.html'in Moss renkleriyle kopyası, tools/snap.swift ile 600×469 @1 → 1200×938
     concept: true, // YouReply bu tasarımları kullanmadı
     caseCover: false,
     link: null,

@@ -1,8 +1,8 @@
 /* WeReply vaka sayfasının bölümleri.
- * Kaynak: /Users/mac/Projects/wereply/docs/case-study.md, ekranlar canvas/project/S-*.dc.html (Sparked palet).
+ * Kaynak: /Users/mac/Projects/wereply/docs/case-study.md, ekranlar canvas/project/MS-*.dc.html (Moss palet, 2026-10-26).
  * EN metinler case-study.md'den; TR çevirisi aşağıda (TR nesnesi).
  * Uygulama ekranlarındaki yazılar İngilizce kalır; onlar ürünün kendisi.
- * Yön B (2026-10-23): akış şeması + açık turuncu önce/sonra bandı + (2. adım) sabit çalışma sayfası, dört hâl. */
+ * Yön B (2026-10-23): akış şeması + açık şeftali önce/sonra bandı + (2. adım) sabit çalışma sayfası, dört hâl. */
 
 (() => {
   const IMG = 'assets/projects/wereply/';
@@ -78,7 +78,7 @@
     system: {
       title: 'Design system',
       colors: 'Color palette',
-      roles: ['main action, progress', 'links, labels', 'pending step', 'ground', 'text', 'secondary text'],
+      roles: ['main action, progress, links', 'pending step', 'cards', 'borders', 'text', 'secondary text'],
       type: 'Typography',
       typeRoles: ['Heading', 'Subheading', 'Body', 'Button', 'Caption'],
       components: 'Components',
@@ -160,7 +160,7 @@
     },
     system: {
       ...EN.system,
-      roles: ['ana aksiyon, ilerleme', 'bağlantılar, etiketler', 'bekleyen adım', 'zemin', 'metin', 'ikincil metin'],
+      roles: ['ana aksiyon, ilerleme, bağlantılar', 'bekleyen adım', 'kartlar', 'çizgiler', 'metin', 'ikincil metin'],
       typeRoles: ['Başlık', 'Alt başlık', 'Gövde', 'Buton', 'Küçük yazı'],
     },
     outcome: {
@@ -173,13 +173,14 @@
   };
   const TEXT = { tr: TR, en: EN };
 
-  const PALETTE = ['#FE9820', '#C96F00', '#FBDAA9', '#F8F8F6', '#1F1F1F', '#7A7A7A']; // beyaz (kartlar) palete yazılmıyor
+  const PALETTE = ['#303C3C', '#ECCCB4', '#F5F2EA', '#E0D6C4', '#141818', '#546058']; // beyaz (zemin) palete yazılmıyor
   // Akıştaki dokuz ekran (sonuç bandı)
   const FLOW = ['flow-01.jpg', 'flow-02.jpg', 'flow-03.jpg', 'flow-04.jpg', 'flow-05.jpg', 'flow-06.jpg', 'flow-07.jpg', 'flow-08.jpg', 'flow-09.jpg'];
 
-  const SHOTS_V = 5; // ekranlar yeniden render edilince artır (tarayıcı eski görseli göstermesin)
+  const SHOTS_V = 6; // ekranlar yeniden render edilince artır (tarayıcı eski görseli göstermesin)
   // Akış ekranları 3x (1124×2436), Figma'dan gelen "önce" ekranları 2x (750×1624)
-  const shot = (src, alt) => `<img class="wr-shot" src="${IMG}${src}?v=${SHOTS_V}" width="375" height="812" alt="${alt}" loading="lazy" decoding="async">`;
+  const path = (src) => `${IMG}${src}?v=${SHOTS_V}`;
+  const shot = (src, alt) => `<img class="wr-shot" src="${path(src)}" width="375" height="812" alt="${alt}" loading="lazy" decoding="async">`;
   const fill = (s) => (window.fillText ? window.fillText(s) : s);
   const items = (list) => `<ol class="wr-items">${list.map((it, i) => `
     <li><span class="wr-num">${String(i + 1).padStart(2, '0')}</span><h3>${it.title}</h3><p>${it.text}</p></li>`).join('')}</ol>`;
@@ -187,7 +188,7 @@
   /* ---------- Akış şeması ---------- */
 
   // Bir adım: ekran adı (ui), açıklama (t), buton (btn, uygulamadaki gradyan hap), ilerleme çubuğu (bar) ya da karar (q).
-  // Hepsi beyaz; kaydırmada "şu an" olan adımın chip'leri açık turuncuya döner.
+  // Hepsi beyaz; kaydırmada "şu an" olan adımın chip'leri şeftaliye döner.
   const chip = (st) => {
     if (st.q) return `<li class="wr-chip is-q"><i aria-hidden="true"></i>${st.q}</li>`;
     // ui, btn ve bar uygulamanın kendi yazıları: her iki dilde İngilizce
@@ -293,7 +294,7 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => setTimeout(setup));
   else setTimeout(setup);
 
-  // Design system: kenardan kenara açık turuncu bant, "Ne değişti"nin içinde "Her yerde aynı üç adım"dan önce.
+  // Design system: kenardan kenara açık şeftali bant, "Ne değişti"nin içinde "Her yerde aynı üç adım"dan önce.
   // Butonlar, kart ve adımlar uygulama ekranlarından (S-02, S-07, S-10) HTML olarak yeniden kuruldu.
   const TYPE = [ // boyut / ağırlık, örnek yazı
     [20, 600, 'How People Discover and Choose Podcasts'],
@@ -341,7 +342,7 @@
                         <i class="wr-ds-track__line"></i><i class="wr-ds-track__fill"></i>
                         <span style="left:0">${CHECK(10, 8, 2.2)}</span><small style="left:0">Completed</small>
                         <span style="left:50%;margin-left:-10px">${CHECK(10, 8, 2.2)}</span><small style="left:50%;width:100px;margin-left:-50px;text-align:center">Confirmed</small>
-                        <span style="right:0">3</span><small style="right:0;font-weight:600">Payment</small>
+                        <span class="is-current" style="right:0">3</span><small style="right:0;font-weight:600">Payment</small>
                       </div>
                     </div>
                   </div>
@@ -381,7 +382,7 @@
         </div>
       </section>`,
 
-    // Açık turuncu bant: solda dört sorun, sağda önce/sonra
+    // Açık şeftali bant: solda dört sorun, sağda önce/sonra
     problem: (t) => `
       <section class="wr-problem wr-band" aria-labelledby="wr-problem">
         <div class="wr-wrap wr-problem__grid">
@@ -416,7 +417,7 @@
           </div>
           <div class="wr-sticky case-reveal">
             <div class="wr-phone">${t.states.map((st, i) => `
-              <img class="wr-shot${i === 0 ? ' is-on' : ''}" src="${IMG}${st.src}?v=${SHOTS_V}" width="375" height="812" alt="${t.altPhone}: ${st.pill}" loading="lazy" decoding="async">`).join('')}
+              <img class="wr-shot${i === 0 ? ' is-on' : ''}" src="${path(st.src)}" width="375" height="812" alt="${t.altPhone}: ${st.pill}" loading="lazy" decoding="async">`).join('')}
             </div>
             <div class="wr-pills" role="group" aria-label="${t.pillsLabel}">${t.states.map((st, i) => `
               <button type="button"${i === 0 ? ' class="is-on"' : ''} aria-pressed="${i === 0}" data-wr-pill="${i}">${st.pill}</button>`).join('')}
