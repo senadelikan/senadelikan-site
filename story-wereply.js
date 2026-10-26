@@ -251,18 +251,29 @@
     const imgs = [...box.querySelectorAll('.wr-phone img')];
     const pills = [...box.querySelectorAll('[data-wr-pill]')];
     const steps = [...box.querySelectorAll('[data-wr-step]')];
+    const track = box.querySelector('.wr-change__track');
+    const stage = box.querySelector('.wr-change__grid');
+    let cur = -1;
     const show = (i) => {
+      if (i === cur) return;
+      cur = i;
       imgs.forEach((im, k) => im.classList.toggle('is-on', k === i));
+      steps.forEach((el, k) => { el.classList.toggle('is-on', k === i); el.classList.toggle('is-past', k < i); });
       pills.forEach((p, k) => { p.classList.toggle('is-on', k === i); p.setAttribute('aria-pressed', k === i); });
     };
-    let lock = 0; // hapla kaydırırken gözlemci araya girmesin
-    const io = new IntersectionObserver((es) => es.forEach((e) => {
-      if (e.isIntersecting && Date.now() > lock) show(+e.target.dataset.wrStep);
-    }), { rootMargin: '-45% 0px -45% 0px' });
-    steps.forEach((el) => io.observe(el));
+    // Sahne sabitken kaydırılan mesafe, hâl sayısına eşit dilimlere bölünür
+    const range = () => track.offsetHeight - stage.offsetHeight;
+    const stickTop = () => parseFloat(getComputedStyle(stage).top) || 0;
+    const update = () => {
+      const done = stickTop() - track.getBoundingClientRect().top;
+      show(Math.max(0, Math.min(steps.length - 1, Math.floor((done / range()) * steps.length))));
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
     pills.forEach((p, i) => p.addEventListener('click', () => {
-      show(i); lock = Date.now() + 900;
-      steps[i].scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+      const y = window.scrollY + track.getBoundingClientRect().top - stickTop() + ((i + 0.5) / steps.length) * range();
+      window.scrollTo({ top: y, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     }));
   };
   // Sonuç şeridi: bölüm ekrana oturunca sabitlenir, aşağı kaydırdıkça dokuz ekran yana kayar, sonra sayfa devam eder.
@@ -398,23 +409,22 @@
         </div>
       </section>`,
 
-    // Ne değişti: solda hâl başına bir metin, sağda sabit çalışma sayfası; hangi metin görünürse o hâl.
-    // Haplar tıklanabilir: tıklayınca hâl değişir ve metin o adıma kayar.
+    // Ne değişti: bölüm ekrana sabitlenir; solda tek başlık, sağda çalışma sayfası, kaydırdıkça ikisi birlikte değişir.
+    // Haplar tıklanabilir: tıklayınca sayfa o hâlin kaydırma noktasına gider.
     change: (t, all) => `
       <section class="wr-change" aria-labelledby="wr-change">
         <div class="wr-wrap wr-change__head case-reveal">
           <h2 id="wr-change" class="wr-title">${t.title}</h2>
           <p class="wr-lead">${t.lead}</p>
         </div>
+        <div class="wr-change__track" style="--n: ${t.states.length}">
         <div class="wr-wrap wr-change__grid">
-          <div>
-            <ol class="wr-steps">${t.states.map((st, i) => `
-              <li class="wr-step case-reveal" data-wr-step="${i}">
-                <span class="wr-step__label">${st.pill}</span>
-                <h3>${fill(st.title)}</h3>
-              </li>`).join('')}
-            </ol>
-          </div>
+          <ol class="wr-steps case-reveal">${t.states.map((st, i) => `
+            <li class="wr-step${i === 0 ? ' is-on' : ''}" data-wr-step="${i}">
+              <span class="wr-step__label">${st.pill}</span>
+              <h3>${fill(st.title)}</h3>
+            </li>`).join('')}
+          </ol>
           <div class="wr-sticky case-reveal">
             <div class="wr-phone">${t.states.map((st, i) => `
               <img class="wr-shot${i === 0 ? ' is-on' : ''}" src="${path(st.src)}" width="375" height="812" alt="${t.altPhone}: ${st.pill}" loading="lazy" decoding="async">`).join('')}
@@ -423,6 +433,7 @@
               <button type="button"${i === 0 ? ' class="is-on"' : ''} aria-pressed="${i === 0}" data-wr-pill="${i}">${st.pill}</button>`).join('')}
             </div>
           </div>
+        </div>
         </div>${systemBox(all.system)}
         <div class="wr-wrap wr-same case-reveal">
           <div>
