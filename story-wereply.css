@@ -339,14 +339,17 @@
 /* Sahnenin altındaki boş blok kaydırma mesafesi: hâl başına 45vh (padding olmaz, sticky padding'e giremez) */
 .wr-change__track::after { content: ""; display: block; height: calc(var(--n) * 45vh); }
 .wr-change__grid {
+  /* tam ekran sahne; içerik menünün altında kalan alanda dikeyde ortalı (üst menü geri gelince telefonun üstüne binmesin) */
   position: sticky;
-  top: calc(var(--head-h) + 16px); /* üst menü geri gelince telefonun üstüne binmesin */
+  top: 0;
+  height: 100svh;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
   gap: clamp(28px, 6vw, 96px);
   align-items: center;
-  padding-top: clamp(24px, 3vw, 40px);
-  padding-bottom: clamp(24px, 3vw, 40px);
+  align-content: center;
+  padding-top: calc(var(--head-h) + 16px);
+  padding-bottom: 24px;
 }
 /* Başlıklar üst üste: aynı anda yalnızca biri görünür */
 .wr-steps { list-style: none; padding: 0; margin: 0; display: grid; }
@@ -391,7 +394,7 @@
 
 @media (max-width: 760px) {
   /* dar ekranda telefon üstte, başlık altında ortalı */
-  .wr-change__grid { grid-template-columns: 1fr; gap: 20px; top: var(--head-h); text-align: center; }
+  .wr-change__grid { grid-template-columns: 1fr; gap: 20px; text-align: center; }
   .wr-sticky { order: -1; }
   .wr-phone { width: min(60vw, calc((100svh - var(--head-h) - 230px) * 0.4618)); }
   .wr-same { grid-template-columns: 1fr; gap: 20px; }

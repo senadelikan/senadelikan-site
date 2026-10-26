@@ -218,7 +218,8 @@
           scale: s,
           rotation: d * -9,
           rotationY: d * -28,
-          opacity: ad > 2.2 ? 0 : Math.max(0.35, 1 - 0.6 * ad),
+          // soldaki komşu künye yazısının altına düşer: kayarken tamamen kaybolur, yazı temiz okunsun
+          opacity: ad > 2.2 ? 0 : d < 0 ? Math.max(0, 1 - ad) : Math.max(0.35, 1 - 0.6 * ad),
           zIndex: 100 - Math.round(ad * 10),
           visibility: ad > 2.4 ? 'hidden' : 'visible',
         });
