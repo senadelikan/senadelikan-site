@@ -27,7 +27,7 @@
     'intro.skip': 'Skip',
 
     'hero.kicker': 'Portfolio · 2026',
-    'hero.title': 'Hi, I’m Sena. I’m on my way to becoming a <span class="marker kmark">UI/UX</span> and <span class="marker marker--pink kmark">Product Designer</span>.',
+    'hero.title': 'Hi, I’m Sena. I design products as a <span class="marker kmark">UI/UX</span> and <span class="marker marker--pink kmark">Product Designer</span>.',
     'hero.projects': 'See my projects',
     'cv': 'Download my CV',
     'marquee': 'HELLO ✦ WELCOME TO MY PORTFOLIO ✦ LET’S MAKE THINGS TOGETHER ✦&nbsp;',
