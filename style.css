@@ -233,7 +233,8 @@ body.is-loading { overflow: hidden; touch-action: none; }
    Ana sayfada yalnızca maskot menüye yerleştikten sonra. */
 .nav, .case-nav { transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .is-docked.is-nav-hidden .nav,
-.is-nav-hidden .case-nav { transform: translateY(-100%); }
+.is-nav-hidden .case-nav,
+.is-nav-locked .case-nav { transform: translateY(-100%); } /* is-nav-locked: kilitli bant (Doğa Güncesi bölümleri) boyunca saklı */
 @media (prefers-reduced-motion: reduce) {
   .nav, .case-nav { transition: none; }
 }
@@ -551,8 +552,15 @@ body.is-loading { overflow: hidden; touch-action: none; }
 @media (prefers-reduced-motion: reduce) {
   .concept-tag { transition: none; }
 }
+/* "Print design" rozeti: pembe oval, içinde lime dişli patlama (reklam etiketi havası); yıldızla aynı yerleşim */
+.concept-tag--print { width: 150px; height: 86px; rotate: -8deg; }
+.concept-tag--print svg { fill: none; stroke: none; }
+.concept-tag--print .print-tag__oval { fill: var(--pink); stroke: var(--white); stroke-width: 4; }
+.concept-tag--print .print-tag__burst { fill: var(--lime); }
+.concept-tag--print span { font-size: 13px; line-height: 1.05; letter-spacing: 0.01em; }
 /* Proje kartında: sağ üst köşeye yapıştırılmış */
 .sticker .concept-tag { top: -30px; right: -28px; }
+.sticker .concept-tag--print { top: -34px; right: -40px; }
 
 /* Yer tutucu proje görseli: telefon / tarayıcı taslağı */
 .mock {

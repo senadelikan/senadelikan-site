@@ -199,6 +199,8 @@
 }
 .is-swipe .showcase__item .concept-tag { top: -8px; right: -10px; width: 80px; height: 80px; } /* kaydırma şeridinin üst kenarında kesilmesin */
 .is-swipe .showcase__item .concept-tag span { font-size: 9px; }
+.is-swipe .showcase__item .concept-tag--print { width: 110px; height: 63px; }
+.is-swipe .showcase__item .concept-tag--print span { font-size: 10px; }
 .is-swipe .showcase__value { font-size: 2.5rem; }
 
 /* ---------- Azaltılmış hareket ---------- */
@@ -207,3 +209,8 @@
 .reduced .project-list { display: block; }
 .reduced .showcase { height: auto !important; }
 
+
+/* Künyedeki araçlar: vaka sayfasındaki ikonlu liste, kartta yan yana (projects.js: toolsHTML) */
+.credits .tool-list, .showcase__rows .tool-list { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0; padding: 0; list-style: none; }
+.credits .tool-list li, .showcase__rows .tool-list li { display: inline-flex; align-items: center; gap: 6px; }
+.credits .tool-list svg, .showcase__rows .tool-list svg { flex: none; width: 1em; height: 1em; fill: var(--ink); }

@@ -1,0 +1,391 @@
+/* Doğa Güncesi vaka bölümleri — bant düzeni (ilk sürüm). Kitabın kendi dili: beyaz kâğıt, Poppins, dört bölüm paleti.
+ * "Sabit sahne" denemesi _story-doga-guncesi-sahne.css'te yedekte.
+ * Yalnızca .dg içinde (ve sayfanın üstü için .is-doga-guncesi) geçerli. */
+
+.dg {
+  --dg-ink: #141414;
+  --dg-soft: #4b4b4b;
+  --dg-line: #d9d9d6;
+  --dg-grey: #5c5a56;      /* kitabın "genel" ılık grisi (ön/arka kısım) */
+  --dg-pad-y: clamp(64px, 8vw, 120px);
+  font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  color: var(--dg-ink);
+  /* Zemin bölüm bölüm kitabın renklerinden (Sena, 2 Kasım 2026): kâğıt beyazı ve dört bölümün açık tonları; ızgara bu sayfada yok */
+  -webkit-font-smoothing: antialiased;
+}
+.dg :where(h2, h3, p, figure, ol, ul, dl, dd, pre) { margin: 0; }
+.dg :is(h2, h3) { font-family: inherit; text-transform: none; }
+.dg ol, .dg ul { list-style: none; padding: 0; }
+.dg-wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+/* Ortak başlık dili: kitabın bölüm sayfası (etiket · başlık · gövde) */
+.dg-kicker {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dg-grey);
+}
+.dg-title {
+  margin-top: 10px;
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.dg-lead {
+  max-width: 64ch;
+  margin-top: 16px;
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.1875rem);
+  line-height: 1.6;
+  color: var(--dg-soft);
+}
+
+/* Kitap sayfası görseli: kâğıt beyazı, ince kenar, yumuşak gölge */
+.dg-page {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #fff;
+  border: 1px solid var(--dg-line);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.05), 0 14px 36px -12px rgb(0 0 0 / 0.18);
+}
+
+/* ---------- 01 Kitap: solda giriş metni ve sayılar, sağda kapak illüstrasyonu (sayfanın parçası, kutu yok) ---------- */
+
+.dg-cover { padding: clamp(32px, 4vw, 56px) 0 var(--dg-pad-y); background: #FFFFFF; } /* kitabın kâğıdı */
+.dg-cover__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: end;
+}
+.dg-cover__stage { overflow: hidden; }
+.dg-cover__art { display: block; width: 100%; height: auto; will-change: transform; }
+.dg-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: clamp(28px, 4vw, 44px);
+  padding-top: 20px;
+  border-top: 1px solid var(--dg-line);
+}
+.dg-facts dt { font-size: clamp(1.375rem, 1.1rem + 1vw, 2rem); font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+.dg-facts dd { margin-top: 6px; font-size: 0.8125rem; color: var(--dg-soft); }
+@media (max-width: 900px) {
+  .dg-cover__grid { grid-template-columns: 1fr; }
+  .dg-cover__stage { max-width: 560px; }
+}
+@media (max-width: 560px) { .dg-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- 02 Dört bölüm: tam ekran renkli bant, yatay kayan şerit ---------- */
+/* Dış bölüm uzun (her geçiş için bir ekran), içi ekrana yapışır; zemin rengi --ground ile bölümden bölüme değişir. */
+
+.dg-chapters {
+  position: relative;
+  height: calc(100vh + 3 * 100vh);
+  /* zemin yalnızca yapışkan katta: dört ekran boyundaki dış kutu her karede yeniden boyanmasın */
+}
+.dg-chapters__sticky {
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--ground);
+}
+
+/* Başlık bantın içinde, Wholly'deki metin bloğu gibi: büyük başlık, altında rahat paragraf, sola yaslı, küçük etiket yok */
+.dg-chapters__head {
+  width: 100%;
+  padding-top: clamp(96px, 12vh, 136px); /* üst gezinme geri geldiğinde başlığı örtmesin */
+}
+.dg-chapters__head .dg-kicker { display: none; }
+.dg-chapters__head .dg-title { margin-top: 0; font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem); line-height: 1.22; letter-spacing: 0; }
+.dg-chapters__head .dg-lead {
+  max-width: 980px;
+  margin-top: 18px;
+  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  line-height: 1.5;
+  color: var(--dg-ink);
+}
+
+/* Şerit: dört panel yan yana, her biri bir ekran genişliğinde */
+.dg-track {
+  display: flex;
+  width: 400%;
+  height: 100%;
+  will-change: transform;
+}
+.dg-ch {
+  position: relative;
+  flex: 0 0 25%;
+  height: 100%;
+  overflow: hidden;
+  color: var(--dg-ink);
+}
+.dg-ch__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: clamp(28px, 5vw, 80px);
+  align-items: center;
+  height: 100%;
+  padding-top: clamp(16px, 3vh, 40px);
+  padding-bottom: clamp(16px, 3vh, 40px);
+}
+.dg-ch__no { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c1); }
+.dg-ch__title { margin-top: 12px; font-size: clamp(2rem, 1.2rem + 3.6vw, 4rem); font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+.dg-ch__sub { margin-top: 8px; font-size: clamp(1rem, 0.9rem + 0.6vw, 1.375rem); font-weight: 600; color: var(--c1); }
+.dg-tones { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; max-width: 440px; margin-top: clamp(20px, 3vw, 40px); }
+.dg-tones li { display: grid; gap: 2px; } /* ad ve kod kutunun ÜSTÜNDE: alttaki illüstrasyonla karışmasın */
+.dg-tones li span { margin-top: 6px; }
+.dg-tones span { display: block; aspect-ratio: 1; border-radius: 6px; }
+.dg-tones small { font-size: 0.75rem; font-weight: 600; }
+.dg-tones code { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 0.6875rem; color: var(--dg-soft); }
+.dg-ch__page { width: min(100%, 54vh * 0.705); margin-left: auto; }   /* sayfa yüksekliği ekranın ~%54'ü (A5 oranı 0.705) */
+.dg-ch__page .dg-page { width: 100%; }
+
+/* İllüstrasyonlar: üst sağ köşe ve taban; panelin içinde kırpılır */
+.dg-ch__art { position: absolute; z-index: 0; height: auto; pointer-events: none; }
+.dg-ch__art--top { top: -2%; right: -4%; width: min(42vw, 520px); }
+.dg-ch__art--bottom { bottom: -4%; left: -3%; width: min(60vw, 760px); }
+
+/* Noktalar: altta ortada; dolu olan bulunduğumuz bölüm */
+.dg-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 0 clamp(16px, 3vh, 28px);
+}
+.dg-dots button {
+  width: 10px; height: 10px;
+  padding: 0;
+  border: 1.5px solid var(--dg-ink);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.dg-dots button[aria-current="true"] { background: var(--dg-ink); transform: scale(1.15); }
+.dg-dots button:focus-visible { outline: 2px solid var(--dg-ink); outline-offset: 3px; }
+
+@media (max-width: 900px) {
+  .dg-chapters__head { padding-top: clamp(80px, 11vh, 104px); }
+  .dg-chapters__head .dg-lead { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; font-size: 0.9375rem; }
+  .dg-ch__grid { grid-template-columns: 1fr; align-content: start; gap: 16px; }
+  .dg-ch__page { width: min(46%, 34vh * 0.705); margin: 0; }
+  .dg-tones { max-width: 360px; }
+  .dg-ch__art--top { display: none; }
+  .dg-ch__art--bottom { width: 120vw; left: -10vw; bottom: -2%; opacity: 0.9; }
+}
+@media (max-height: 640px) { .dg-chapters__head .dg-lead { display: none; } }
+
+/* Azaltılmış hareket / GSAP yok: paneller alt alta, bant sabitlenmez */
+.dg-chapters--static { height: auto; }
+.dg-chapters--static .dg-chapters__sticky { position: static; height: auto; display: block; overflow: visible; }
+.dg-chapters--static .dg-chapters__head { padding-bottom: 24px; }
+.dg-chapters--static .dg-track { display: block; width: auto; height: auto; }
+.dg-chapters--static .dg-ch { height: auto; min-height: 70vh; padding: 48px 0; background: var(--ground); }
+.dg-chapters--static .dg-dots { display: none; }
+
+/* ---------- 03 Sayfa sistemi ---------- */
+
+.dg-system { padding: var(--dg-pad-y) 0; background: #eef2f8; } /* Deniz açık tonu */
+.dg-pages {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 2.5vw, 32px);
+  margin-top: clamp(32px, 4vw, 56px);
+}
+.dg-pages h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin-top: 16px; font-size: 1rem; font-weight: 600; }
+.dg-pages__ch { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; } /* sayfanın geldiği bölüm, o bölümün ana tonunda */
+.dg-pages p { margin-top: 6px; font-size: 0.875rem; line-height: 1.5; color: var(--dg-soft); }
+@media (max-width: 760px) { .dg-pages { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- Yazı: numune + kademeler (Kent'in açık moru) ---------- */
+.dg-type { padding: var(--dg-pad-y) 0; background: #f7f3f8; }
+.dg-type__grid { display: grid; gap: 40px; }
+.dg-type__specimen .dg-lead { max-width: 30em; }
+.dg-type__aa { margin-top: 18px; font-size: clamp(5rem, 4rem + 4vw, 8.5rem); line-height: 1; font-weight: 700; letter-spacing: -0.03em; color: #4a2d52; }
+.dg-type__font { margin-top: 4px; font-size: 2rem; line-height: 1.2; font-weight: 700; }
+.dg-type__weights { display: flex; gap: 18px; margin-top: 10px; font-size: 1.75rem; line-height: 1.3; color: #4a2d52; }
+.dg-type__weights span:nth-child(1) { font-weight: 400; }
+.dg-type__weights span:nth-child(2) { font-weight: 500; }
+.dg-type__weights span:nth-child(3) { font-weight: 600; }
+.dg-type__weights span:nth-child(4) { font-weight: 700; }
+.dg-type__small { margin-top: 6px; font-size: 0.8125rem; color: var(--dg-soft); }
+.dg-type__small span { margin: 0 4px; color: var(--dg-line); }
+.dg-type__rows div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgb(74 45 82 / 0.18);
+}
+.dg-type__rows div:first-child { border-top: 1px solid rgb(74 45 82 / 0.18); }
+.dg-type__rows dt { color: #4a2d52; } /* kitapta başlıklar bölümün koyu tonunda */
+.dg-type__rows dd { font-size: 0.8125rem; line-height: 1.4; color: var(--dg-soft); }
+.dg-t-h1 { font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.25rem); font-weight: 700; letter-spacing: -0.01em; line-height: 1.1; }
+.dg-t-h2 { font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem); font-weight: 600; }
+.dg-t-etiket { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; }
+.dg-t-govde { font-size: 1rem; line-height: 1.5; color: var(--dg-ink); }
+.dg-t-not { font-size: 0.8125rem; font-style: italic; color: var(--dg-soft); }
+@media (min-width: 700px) {
+  .dg-type__rows div { grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 24px; }
+  .dg-type__rows dd { text-align: right; white-space: nowrap; }
+}
+@media (min-width: 960px) {
+  .dg-type__grid { grid-template-columns: 5fr 7fr; column-gap: clamp(40px, 6vw, 96px); align-items: center; }
+  .dg-type__specimen { align-self: start; }
+}
+
+/* ---------- 04 Kodla kurulum: kilitli bant — solda tarif satırları, sağda adım adım kurulan sayfa ---------- */
+
+.dg-code {
+  --c-deep: #074734; --c-mid: #45674d; --c-line: rgb(7 71 52 / 0.16);
+  position: relative;
+  height: calc(100vh + 3 * 70vh); /* dört adım: giriş + üç geçiş */
+  height: calc(100svh + 3 * 70svh);
+}
+.dg-code__sticky {
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: #f2f5ee; /* Orman açık tonu, sabit */
+}
+.dg-code__head { width: 100%; padding-top: clamp(96px, 12vh, 136px); }
+.dg-code__head .dg-kicker { display: none; }
+.dg-code__head .dg-title { margin-top: 0; font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem); line-height: 1.22; letter-spacing: 0; }
+.dg-code__head .dg-lead { max-width: 980px; margin-top: 18px; font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); line-height: 1.5; color: var(--dg-ink); }
+
+.dg-build {
+  display: grid;
+  grid-template-columns: minmax(260px, 2fr) minmax(0, 3fr); /* sayfa geniş: kamera adımla üzerinde gezer */
+  gap: clamp(24px, 4vw, 64px);
+  align-items: center;
+  min-height: 0;
+  padding-top: clamp(16px, 3vh, 36px);
+  padding-bottom: clamp(12px, 2vh, 24px);
+}
+/* Tarif paneli: koyu yeşil kod bloğu, satır numaraları, mono; anahtar açık yeşil, değer beyaz */
+.dg-build__lines {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 18px 10px 18px 0;
+  border-radius: 14px;
+  background: var(--c-deep);
+  color: #e9f0e6;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: clamp(0.8125rem, 0.75rem + 0.25vw, 0.9375rem);
+  line-height: 1.6;
+}
+.dg-line {
+  display: grid;
+  grid-template-columns: 3.2em minmax(0, 1fr);
+  padding: 6px 12px 6px 0;
+  border-radius: 6px;
+  transition: opacity 0.3s, background-color 0.3s;
+}
+.dg-line__no { text-align: right; padding-right: 1em; color: rgb(255 255 255 / 0.35); font-size: 0.8em; line-height: 2; }
+.dg-line code { font: inherit; white-space: pre-wrap; overflow-wrap: anywhere; color: rgb(255 255 255 / 0.55); } /* parantez ve virgüller soluk */
+.dg-line code i { font-style: normal; color: #afbc7b; }
+.dg-line code b { font-weight: 500; color: #ffffff; }
+.dg-line.is-on { background: rgb(255 255 255 / 0.08); }
+.dg-line.is-done { opacity: 0.5; }
+
+/* Görüntü kutusu satırı doldurur ve kırpar; sayfa kutu genişliğinde, kutudan uzun — kamera (y/scale) GSAP ile sürülür */
+.dg-build__view { position: relative; height: 100%; min-height: 0; overflow: hidden; }
+.dg-build__page {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  aspect-ratio: 1678 / 2380;
+  background: #ffffff;
+  border: 1px solid var(--dg-line);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.05), 0 14px 36px -12px rgb(0 0 0 / 0.18);
+  will-change: transform;
+}
+.dg-build__part { position: absolute; height: auto; display: block; }
+
+@media (max-width: 900px) {
+  .dg-code { height: calc(100svh + 3 * 60svh); }
+  .dg-code__head { padding-top: clamp(80px, 10vh, 104px); }
+  .dg-code__head .dg-lead { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; font-size: 0.9375rem; }
+  .dg-build { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); align-items: start; gap: 16px; }
+  .dg-build__view { width: min(100%, 360px); justify-self: center; }
+}
+/* Hareket yoksa: bant yerine düz akış, her şey görünür */
+.dg-code--static { height: auto; }
+.dg-code--static .dg-code__sticky { position: static; height: auto; overflow: visible; padding-bottom: var(--dg-pad-y); }
+.dg-code--static .dg-dots { display: none; }
+.dg-code--static .dg-build__view { height: auto; overflow: visible; }
+.dg-code--static .dg-build__page { position: relative; }
+
+/* Kapanış cümlesi: bandın altında, aynı zemin, sayfanın ortasında */
+.dg-code-notes { --c-deep: #074734; padding: clamp(48px, 6vw, 88px) 0 var(--dg-pad-y); background: #f2f5ee; }
+.dg-honest {
+  max-width: 30em;
+  margin: 0 auto;
+  text-align: center;
+  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem);
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--c-deep);
+}
+
+/* ---------- 05 Baskı ---------- */
+
+.dg-print { padding: var(--dg-pad-y) 0 clamp(48px, 6vw, 96px); background: #fbf4e6; } /* Tarla açık tonu */
+.dg .pin-spacer { background: #fbf4e6; } /* ScrollTrigger'ın kilit boşluğu: bölüm sabitlenince üstte sayfa ızgarası sızmasın */
+.dg-strip-clip { margin-top: clamp(32px, 4vw, 56px); }
+.dg-strip {
+  display: flex;
+  gap: clamp(14px, 2vw, 28px);
+  padding: 8px var(--gutter) 24px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  will-change: transform;
+}
+.dg-strip::-webkit-scrollbar { display: none; }
+.dg-strip li { flex: 0 0 clamp(150px, 18vw, 240px); scroll-snap-align: start; }
+
+/* ---------- Sayfanın üstü (case.html): başlık ve künye kitabın dilinde ---------- */
+
+.is-doga-guncesi .case-hero {
+  font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  color: #141414;
+  -webkit-font-smoothing: antialiased;
+}
+.is-doga-guncesi .case-hero .label { font-family: inherit; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; color: #5c5a56; }
+.is-doga-guncesi .case-hero { padding-bottom: 0; }
+.is-doga-guncesi .case-hero__title { max-width: none; font-family: inherit; font-weight: 700; letter-spacing: -0.01em; line-height: 1; text-transform: uppercase; }
+.dg-hero-tagline {
+  margin: 14px 0 0;
+  font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(0.8125rem, 0.6rem + 1vw, 1.25rem);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: #3a3a3a;
+}
+.is-doga-guncesi .case-hero__summary { margin-top: 22px; }
+.is-doga-guncesi .case-credits { margin-bottom: clamp(24px, 3vw, 40px); }
+.is-doga-guncesi .case-hero__summary { max-width: 50ch; font-family: inherit; font-size: clamp(1rem, 0.95rem + 0.3vw, 1.1875rem); line-height: 1.6; color: #4b4b4b; }
+.is-doga-guncesi .case-credits { --ink: #141414; --line: #d9d9d6; max-width: 820px; border-top-color: #d9d9d6; }
+.is-doga-guncesi .case-hero .case-credits dt { font-family: inherit; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em; color: #5c5a56; }
+.is-doga-guncesi .case-credits dd { font-size: 0.9375rem; font-weight: 600; }
+.is-doga-guncesi .case-next, .is-doga-guncesi .footer { font-family: var(--font-body); }
+
+@media (prefers-reduced-motion: reduce) {
+  .dg-cover__art, .dg-ch__art, .dg-strip { transform: none !important; }
+}

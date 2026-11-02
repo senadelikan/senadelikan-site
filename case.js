@@ -36,17 +36,16 @@
     count: `${pad(index + 1)} / ${pad(projects.length)}`,
     kicker: `${t('case.kicker', 'Vaka çalışması')} · ${pad(index + 1)}`,
     title: p.logo ? `<img src="${p.logo}" alt="${p.title}" width="204" height="59">` : p.title,
-    summary: p.summary,
+    summary: p.heroSummary === false ? '' : p.summary, // heroSummary:false → vaka başlığında özet yok (kart ve arşivde kalır)
     year: p.caseYear || p.year,
     category: CATS[p.category] || p.category,
     role: p.role,
     tools: window.toolsHTML(p.tools),
     nextTitle: next.title,
   };
-  // Konsept projelerde logonun yanında yıldız sticker (gerçek değil, kişisel konsept)
-  if (p.concept) {
-    slots.title = `<span class="case-hero__mark">${slots.title}${window.conceptTagHTML()}</span>`;
-  }
+  // Sticker: konsept projelerde lime yıldız, baskı işinde adaçayı mühür (projects.js: tagHTML)
+  const tag = window.tagHTML(p);
+  if (tag) slots.title = `<span class="case-hero__mark">${slots.title}${tag}</span>`;
   document.title = `${p.title} · Sena Delikan`;
   document.querySelectorAll('[data-slot]').forEach((el) => {
     const key = el.dataset.slot;

@@ -14,7 +14,7 @@
   --wr-pad-y: clamp(56px, 7vw, 104px);
   font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
   color: var(--wr-text);
-  background: var(--wr-ground);
+  background: transparent; /* sitenin ızgara zemini görünür (2026-11-02); --wr-ground yalnızca panellerde */
   -webkit-font-smoothing: antialiased;
 }
 .wr :where(h2, h3, p, figure, ol, ul) { margin: 0; }
@@ -476,6 +476,7 @@
 /* ---------- Sonuç: koyu arduvaz bant ---------- */
 
 .wr-outcome { background: var(--wr-accent); color: #fff; padding: var(--wr-pad-y) 0 clamp(40px, 5vw, 72px); }
+.wr .pin-spacer { background: var(--wr-accent); } /* şerit sabitlenince kilit boşluğunda ızgara görünmesin */
 .wr-outcome .wr-title { color: #fff; }
 .wr-outcome .wr-lead { color: rgb(255 255 255 / 0.9); }
 .wr-outcome__tools { margin-top: 14px !important; max-width: 62ch; font-size: 0.9rem; line-height: 1.55; color: rgb(255 255 255 / 0.78); }
@@ -497,12 +498,8 @@
 
 /* ---------- Sayfanın üstü (case.html): başlık ve künye WeReply dilinde ---------- */
 
-.is-wereply.case-page { background: #FFFFFF; }
-/* Izgara zemin yerine uygulamanın zemini; kenardan kenara (Wholly'deki gibi gölge + kırpma ile) */
+/* Zemin sitenin ızgarası (2026-11-02: beyaz kaldırıldı); yalnızca yazı WeReply dilinde */
 .is-wereply .case-hero {
-  background: #FFFFFF;
-  box-shadow: 0 0 0 100vmax #FFFFFF;
-  clip-path: inset(0 -100vmax);
   font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
   color: #141818;
   -webkit-font-smoothing: antialiased;

@@ -924,12 +924,7 @@ button.wh-merge__row:focus-visible { outline: 2px solid var(--wh-brand); outline
 
 /* ---------- Sayfanın üstü (case.html): başlık ve künye Wholly stilinde; kapak görseli yok ---------- */
 
-/* Izgara zemin yerine Wholly zemini; kenardan kenara (gölge + kırpma ile) */
-.is-wholly .case-hero {
-  background: #FBFBFC;
-  box-shadow: 0 0 0 100vmax #FBFBFC;
-  clip-path: inset(0 -100vmax);
-}
+/* Zemin sitenin ızgarası (2026-11-02: Wholly beyazı kaldırıldı) */
 .is-wholly .case-hero {
   font-family: "Nunito", ui-sans-serif, system-ui, sans-serif;
   color: #2448C4;

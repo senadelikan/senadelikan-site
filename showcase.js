@@ -50,7 +50,7 @@
     return `<a class="sticker ${extraClass}" href="case.html?p=${p.slug}" data-index="${i}"
       style="--art: ${p.art.bg}" aria-label="${L(`${p.title}, vaka çalışmasını aç`, `${p.title}, open case study`)}">
       <span class="sticker__art">${p.art.img ? `<img src="${p.art.img}" alt="" decoding="async">` : mockHTML(p.art.mock)}</span>
-      <span class="sticker__peel" aria-hidden="true"></span>${p.concept ? window.conceptTagHTML() : ''}</a>`;
+      <span class="sticker__peel" aria-hidden="true"></span>${window.tagHTML(p)}</a>`;
   }
 
   function render() {
@@ -69,7 +69,7 @@
           <dl class="credits">
             <div><dt class="label">${t('projects.role', 'Rol')}</dt><dd>${window.fillText(p.role)}</dd></div>
             <div><dt class="label">${t('projects.year', 'Yıl')}</dt><dd>${p.year}</dd></div>
-            <div><dt class="label">${t('projects.tools', 'Araçlar')}</dt><dd>${p.tools}</dd></div>
+            <div><dt class="label">${t('projects.tools', 'Araçlar')}</dt><dd>${window.toolsHTML(p.tools)}</dd></div>
           </dl>
           <a class="link" href="case.html?p=${p.slug}">${t('projects.read', 'Vaka çalışmasını oku →')}</a>
         </div>
@@ -91,7 +91,7 @@
     const fill = () => {
       if (noEl) noEl.textContent = pad(i + 1);
       titleEl.textContent = p.title;
-      fields.forEach((dd) => { dd.innerHTML = window.fillText(p[dd.dataset.field]); });
+      fields.forEach((dd) => { dd.innerHTML = dd.dataset.field === 'tools' ? window.toolsHTML(p.tools) : window.fillText(p[dd.dataset.field]); }); // araçlar: ikonlu liste
       // result isteğe bağlı: yoksa büyük sayı ve etiketi gizlenir, yalnızca alıntı kalır
       valueEl.textContent = p.result ? p.result.value : '';
       valueLabelEl.textContent = p.result ? p.result.label : '';

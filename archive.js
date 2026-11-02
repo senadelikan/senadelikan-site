@@ -2,13 +2,15 @@
 
 (() => {
   window.applyI18n?.();
+  // year '2024–2026' gibi aralık olabilir: sıralama ve özet için son yıl alınır
+  const yearOf = (p) => { const m = String(p.year).match(/\d{4}/g); return m ? Number(m[m.length - 1]) : 0; };
   const projects = (window.PROJECTS || [])
-    .map((p, i) => ({ ...p, order: i }))
-    .sort((a, b) => b.year - a.year || a.order - b.order);
+    .map((p, i) => ({ ...p, order: i, y: yearOf(p) }))
+    .sort((a, b) => b.y - a.y || a.order - b.order);
   const pad = (n) => String(n).padStart(2, '0');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const years = projects.map((p) => p.year);
+  const years = projects.map((p) => p.y);
   const [lo, hi] = [Math.min(...years), Math.max(...years)];
   const range = !years.length ? '' : lo === hi ? `${lo}` : `${lo}–${hi}`;
   document.querySelector('[data-slot="total"]').textContent = `${pad(projects.length)} ${L('proje', projects.length === 1 ? 'project' : 'projects')}`;
