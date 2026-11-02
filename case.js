@@ -40,7 +40,7 @@
     year: p.caseYear || p.year,
     category: CATS[p.category] || p.category,
     role: p.role,
-    tools: p.tools,
+    tools: window.toolsHTML(p.tools),
     nextTitle: next.title,
   };
   // Konsept projelerde logonun yanında yıldız sticker (gerçek değil, kişisel konsept)

@@ -96,6 +96,10 @@
 .case-credits > div + div { padding-left: 16px; border-left: 1px solid var(--line); }
 .case-credits dt { margin-bottom: 6px; }
 .case-credits dd { margin: 0; font-weight: 500; }
+/* Araçlar: tek renk logo + ad; logo künyenin mürekkep rengini alır */
+.tool-list { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.tool-list li { display: inline-flex; align-items: center; gap: 6px; }
+.tool-list svg { flex: none; width: 1em; height: 1em; fill: var(--ink); }
 
 /* ---------- Kapak: yırtık kâğıt kenarı ---------- */
 
