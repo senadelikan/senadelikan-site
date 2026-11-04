@@ -22,4 +22,4 @@ Netlify'da "Force HTTPS" açık; http → https yönlendirmesi otomatik.
 ## GitHub Pages denemesi (2–3 Kasım 2026)
 
 Pages açıldı ama GitHub özel alan adı için sertifika üretmedi; geri dönüldü.
-Depodaki `CNAME` dosyası o denemeden kalma; Netlify'ı etkilemez.
+Pages kapatıldı, `CNAME` dosyası kaldırıldı.
