@@ -148,6 +148,14 @@
   .lk-yaprak-arka { clip-path: inset(0 0 25.54% 0); }
   .lk-yaprak-on   { clip-path: inset(74.46% 0 0 0); }
 
+  /* Ön plan çalıları: her şeyin üstünde, yapraklar altından geçer */
+  .lk-on-cali {
+    position: absolute;
+    left: 0.000%; top: 55.405%; width: 100.000%;
+    height: auto;
+    pointer-events: none;
+  }
+
   .lk-yaprak {
     position: absolute;
     top: 0; left: 0;
@@ -207,6 +215,7 @@
     <span><kbd id="lk-tus-geri">Esc</kbd>Geri</span>
   </div>
   <div class="lk-yaprak-on" id="lk-yaprak-on"></div>
+  <img class="lk-on-cali" src="on-cali.webp" alt="">
 </div>
 
 <script>
