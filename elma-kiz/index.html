@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Lanternkeeper açılış menüsü</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ranchers&display=swap">
+<style>
+  /* Entegrasyon: .lk-sahne bloğunu, bu stil içeriğini ve alttaki betiği
+     sitenin sayfasına taşımak yeter. Görsel yolları (sahne.webp, yaprak.png)
+     kendi klasörüne göre düzelt. Ayarlar betiğin başındaki AYAR nesnesinde. */
+  html, body { margin: 0; height: 100%; background: #2a1d14; }
+  /* Tek başına açıldığında sahne ekranı kaplar: oran korunur, taşan kenar kırpılır.
+     Siteye gömerken bu body kuralını ve width satırını kendi kutuna göre değiştir
+     (örn. width: 100%); içerideki her şey sahneye göre yüzdeyle durur. */
+  body { overflow: hidden; display: flex; justify-content: center; align-items: center; }
+
+  .lk-sahne {
+    position: relative;
+    width: max(100vw, calc(100vh * 2000 / 1120));   /* "cover" */
+    aspect-ratio: 2000 / 1120;   /* resmin oranı */
+    flex: none;
+    overflow: hidden;
+    background: url("sahne.webp") center / cover no-repeat;
+    user-select: none;
+    container-type: inline-size;   /* 1cqw = sahnenin 1/100'ü = 20 sahne pikseli */
+  }
+
+  /* Tabela. Konumlar hedef görüntüden ölçüldü (2000x1120 sahne):
+     direk 956,132 87x751; plakalar x=802 y=266/408/550/692, 416x142. */
+  .lk-direk {
+    position: absolute;
+    left: 47.8%; top: 11.79%;
+    width: 4.35%;
+    height: auto;
+    pointer-events: none;
+  }
+  .lk-menu {
+    position: absolute;
+    left: 40.1%; top: 23.75%;
+    width: 20.8%;
+    margin: 0; padding: 0; list-style: none;
+  }
+  .lk-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 7.1cqw;                 /* 142 / 20 */
+    margin: 0; padding: 0;
+    border: 0;
+    background: url("plaka.png") center / 100% 100% no-repeat;
+    cursor: pointer;
+    outline: none;
+  }
+  /* Yazı Figma ölçeğinde (Ranchers 93.54) çizilir, sonra --k ile küçültülür;
+     böylece label.svg'deki iç gölge + doku + noise filtresi aynı ölçekte kalır.
+     --k = sahne genişliği / 4096 (betik ayarlar). */
+  .lk-btn span {
+    display: block;
+    white-space: nowrap;
+    font-family: "Ranchers", "Arial Rounded MT Bold", sans-serif;
+    font-size: 93.54px;
+    line-height: 1;
+    color: #F7E2C1;
+    transform: scale(var(--k, 0.2));
+    transform-origin: 50% 50%;
+    filter: url(#lk-yazi);
+    -webkit-font-smoothing: antialiased;
+    pointer-events: none;
+  }
+  .lk-btn:hover,
+  .lk-btn:focus-visible { background-image: url("plaka-hover.png"); }
+  .lk-btn:active {
+    background-image: url("plaka-basili.png");
+    transform: translateY(0.1cqw);
+  }
+
+  /* 1. Açılış: plakalar üstten gelip direğe çakılır (direk plakanın %37'sinde) */
+  .lk-menu li {
+    transform-origin: 37% 50%;
+    animation: lk-gelis 0.7s cubic-bezier(.3,.9,.35,1) both;
+  }
+  .lk-menu li:nth-child(1) { animation-delay: 0.25s; }
+  .lk-menu li:nth-child(2) { animation-delay: 0.40s; }
+  .lk-menu li:nth-child(3) { animation-delay: 0.55s; }
+  .lk-menu li:nth-child(4) { animation-delay: 0.70s; }
+  @keyframes lk-gelis {
+    0%   { opacity: 0; transform: translateY(-70%) rotate(-4deg); }
+    55%  { opacity: 1; transform: translateY(4%)  rotate(1.8deg); }
+    78%  {             transform: translateY(-1.5%) rotate(-0.8deg); }
+    100% {             transform: translateY(0)    rotate(0); }
+  }
+
+  /* 2. Fener: resmin üstüne yumuşak sıcak ışık katmanı, 4.5 sn'de bir nefes */
+  .lk-fener {
+    position: absolute;
+    left: 66%; top: 12%;
+    width: 30%; aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+      rgba(255,222,150,0.60) 0%,
+      rgba(255,196,120,0.28) 32%,
+      rgba(255,180,110,0.00) 68%);
+    mix-blend-mode: screen;
+    animation: lk-nefes 4.5s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes lk-nefes { from { opacity: 0.35; } to { opacity: 1; } }
+
+  /* 5. Köşeler: sol altta sürüm, sağ altta tuş istemi */
+  .lk-kose {
+    position: absolute;
+    bottom: 2.2cqw;
+    font-family: "Ranchers", sans-serif;
+    font-size: 1.35cqw;
+    line-height: 1;
+    color: #F7E2C1;
+    opacity: 0.85;
+    text-shadow: 0 0.08cqw 0.15cqw rgba(60,35,10,0.6);
+    letter-spacing: 0.03em;
+    pointer-events: none;
+  }
+  .lk-kose-sol { left: 2.2cqw; }
+  .lk-kose-sag { right: 2.2cqw; display: flex; gap: 1.4cqw; align-items: center; }
+  .lk-kose kbd {
+    display: inline-block;
+    font: inherit;
+    min-width: 1.3cqw;
+    padding: 0.25cqw 0.45cqw 0.2cqw;
+    margin-right: 0.45cqw;
+    border: 0.1cqw solid rgba(247,226,193,0.85);
+    border-radius: 0.45cqw;
+    text-align: center;
+  }
+  .lk-kose kbd.yuvarlak { border-radius: 50%; min-width: 1.6cqw; }
+
+  /* Yaprak katmanları: Quit plakasının alt çizgisine (834/1120 = %74.46) kadar
+     tabelanın ARKASINDAN, onun altında (direğin alt ucu, taşlar) ÖNÜNDEN geçer.
+     Her yaprak iki katmanda da çizilir, katmanlar o çizgiden kırpılır. */
+  .lk-yaprak-arka, .lk-yaprak-on {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .lk-yaprak-arka { clip-path: inset(0 0 25.54% 0); }
+  .lk-yaprak-on   { clip-path: inset(74.46% 0 0 0); }
+
+  .lk-yaprak {
+    position: absolute;
+    top: 0; left: 0;
+    transform-origin: 0 0;
+    will-change: transform;
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lk-yaprak { display: none; }
+    .lk-menu li, .lk-fener { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+
+<!-- Yazı filtresi: Figma'dan gelen label.svg'nin filtresi (iç gölge, doku, noise) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="lk-yazi" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+    <feOffset dx="2" dy="7"/>
+    <feGaussianBlur stdDeviation="2.25"/>
+    <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0"/>
+    <feBlend mode="multiply" in2="shape" result="effect1_innerShadow"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.25 0.25" numOctaves="3" seed="6603"/>
+    <feDisplacementMap in="effect1_innerShadow" scale="9.2" xChannelSelector="R" yChannelSelector="G" result="displacedImage"/>
+    <feMerge result="effect2_texture"><feMergeNode in="displacedImage"/></feMerge>
+    <feTurbulence type="fractalNoise" baseFrequency="2 2" stitchTiles="stitch" numOctaves="3" result="noise" seed="8348"/>
+    <feColorMatrix in="noise" type="luminanceToAlpha" result="alphaNoise"/>
+    <feComponentTransfer in="alphaNoise" result="coloredNoise1">
+      <feFuncA type="discrete" tableValues="1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/>
+    </feComponentTransfer>
+    <feComposite operator="in" in2="effect2_texture" in="coloredNoise1" result="noise1Clipped"/>
+    <feFlood flood-color="#C7AA87" result="color1Flood"/>
+    <feComposite operator="in" in2="noise1Clipped" in="color1Flood" result="color1"/>
+    <feMerge><feMergeNode in="effect2_texture"/><feMergeNode in="color1"/></feMerge>
+  </filter>
+</svg>
+
+<div class="lk-sahne" id="lk-sahne">
+  <div class="lk-yaprak-arka" id="lk-yaprak-arka"></div>
+  <div class="lk-fener"></div>
+  <img class="lk-direk" src="direk.png" alt="">
+  <ul class="lk-menu" id="lk-menu">
+    <li><button class="lk-btn" type="button"><span>New Game</span></button></li>
+    <li><button class="lk-btn" type="button"><span>Load Game</span></button></li>
+    <li><button class="lk-btn" type="button"><span>Settings</span></button></li>
+    <li><button class="lk-btn" type="button"><span>Quit</span></button></li>
+  </ul>
+  <div class="lk-kose lk-kose-sol">v0.1</div>
+  <div class="lk-kose lk-kose-sag" id="lk-tus">
+    <span><kbd id="lk-tus-sec">Enter</kbd>Seç</span>
+    <span><kbd id="lk-tus-geri">Esc</kbd>Geri</span>
+  </div>
+  <div class="lk-yaprak-on" id="lk-yaprak-on"></div>
+</div>
+
+<script>
+(function () {
+  var AYAR = {
+    adet: 6,             // ekrandaki yaprak sayısı
+    kaynak: "yaprak.png",
+    boyMin: 0.3,         // yaprak ölçeği (1 = 130px orijinal, sahne 2000px genişken)
+    boyMax: 0.55,
+    yatayMin: 45,        // sağdan sola kayma hızı, px/sn (sahne 2000px genişken)
+    yatayMax: 80,
+    dusmeMin: 12,        // aşağı inme hızı, px/sn
+    dusmeMax: 25,
+    dalga: 14            // yukarı aşağı hafif dalgalanma, px
+  };
+
+  var sahne = document.getElementById("lk-sahne");
+  var yapraklar = [];
+
+  function olcekAyarla() {            // yazı ölçeği: sahne / 4096 (Figma tuvali 2x)
+    sahne.style.setProperty("--k", (sahne.clientWidth / 4096).toFixed(4));
+  }
+  olcekAyarla();
+
+  function rastgele(a, b) { return a + Math.random() * (b - a); }
+
+  function yenidenBasla(y, ilk) {
+    var W = sahne.clientWidth, H = sahne.clientHeight, k = W / 2000;
+    y.olcek = rastgele(AYAR.boyMin, AYAR.boyMax) * k;
+    y.gen = 130 * y.olcek;
+    // sağdan girer, sola doğru süzülür; ilk açılışta ekrana dağılmış başlar
+    y.x = ilk ? rastgele(0, W) : W + y.gen + rastgele(0, W * 0.4);
+    y.y = rastgele(0.05, 0.75) * H;
+    y.vx = rastgele(AYAR.yatayMin, AYAR.yatayMax) * k;
+    y.vy = rastgele(AYAR.dusmeMin, AYAR.dusmeMax) * k;
+    y.faz = rastgele(0, Math.PI * 2);
+    y.frekans = rastgele(0.5, 0.9);
+    y.dalga = AYAR.dalga * k * rastgele(0.6, 1.4);
+    y.el.style.opacity = y.el2.style.opacity = rastgele(0.8, 1).toFixed(2);
+  }
+
+  var katArka = document.getElementById("lk-yaprak-arka");
+  var katOn = document.getElementById("lk-yaprak-on");
+  for (var i = 0; i < AYAR.adet; i++) {
+    var el = document.createElement("img");
+    el.className = "lk-yaprak";
+    el.src = AYAR.kaynak;
+    el.alt = "";
+    katArka.appendChild(el);                // üst bölge: tabelanın arkasında
+    var el2 = el.cloneNode();
+    katOn.appendChild(el2);                 // alt bölge: tabelanın önünde
+    var y = { el: el, el2: el2 };
+    yenidenBasla(y, true);
+    yapraklar.push(y);
+  }
+
+  var son = performance.now();
+  function kare(simdi) {
+    var dt = Math.min((simdi - son) / 1000, 0.05);
+    son = simdi;
+    var H = sahne.clientHeight;
+    var t = simdi / 1000;
+
+    for (var i = 0; i < yapraklar.length; i++) {
+      var y = yapraklar[i];
+      y.x -= y.vx * dt;
+      y.y += y.vy * dt;
+      var dy = Math.sin(t * y.frekans + y.faz) * y.dalga;
+      y.el.style.transform = y.el2.style.transform =
+        "translate(" + y.x + "px," + (y.y + dy) + "px) scale(" + y.olcek + ")";
+      if (y.x < -y.gen || y.y > H + 20) yenidenBasla(y, false);
+    }
+    requestAnimationFrame(kare);
+  }
+  requestAnimationFrame(kare);
+
+  // Klavye / controller: ok tuşlarıyla gez, Enter ile seç
+  var btns = Array.prototype.slice.call(document.querySelectorAll(".lk-btn"));
+  document.addEventListener("keydown", function (e) {
+    var i = btns.indexOf(document.activeElement);
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      if (i < 0) i = 0;
+      else i = (i + (e.key === "ArrowDown" ? 1 : -1) + btns.length) % btns.length;
+      btns[i].focus();
+    }
+  });
+  btns.forEach(function (b) {
+    b.addEventListener("click", function () { console.log("menu:", b.textContent); });
+  });
+
+  // 5. Tuş istemi: controller bağlanınca A / B'ye döner
+  window.addEventListener("gamepadconnected", function () {
+    var a = document.getElementById("lk-tus-sec"), b = document.getElementById("lk-tus-geri");
+    a.textContent = "A"; b.textContent = "B";
+    a.classList.add("yuvarlak"); b.classList.add("yuvarlak");
+  });
+
+  // 6. Sesler: dosya yok, Web Audio ile üretilir (ilk tıklama/tuştan sonra çalar).
+  //    Gerçek ses dosyası gelince calSes() içini Audio ile değiştirmek yeter.
+  var ac = null;
+  function sesAc() {
+    if (!ac) { try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} }
+    if (ac && ac.state === "suspended") ac.resume();
+  }
+  document.addEventListener("pointerdown", sesAc, { once: false });
+  document.addEventListener("keydown", sesAc, { once: false });
+  function gurultu(sure) {
+    var n = Math.floor(ac.sampleRate * sure), buf = ac.createBuffer(1, n, ac.sampleRate), d = buf.getChannelData(0);
+    for (var i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+    var src = ac.createBufferSource(); src.buffer = buf; return src;
+  }
+  function calSes(tur) {
+    if (!ac || ac.state !== "running") return;
+    var t = ac.currentTime, g = ac.createGain(); g.connect(ac.destination);
+    if (tur === "hover") {                      // kısa tahta "tık"
+      var n = gurultu(0.05), f = ac.createBiquadFilter();
+      f.type = "bandpass"; f.frequency.value = 1900; f.Q.value = 6;
+      n.connect(f); f.connect(g);
+      g.gain.setValueAtTime(0.22, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+      n.start(t);
+    } else {                                    // seçim: hover "tık"ının biraz daha
+      var n3 = gurultu(0.07), f3 = ac.createBiquadFilter();  // kalın ve kısa hali
+      f3.type = "bandpass"; f3.frequency.value = 1100; f3.Q.value = 5;
+      n3.connect(f3); f3.connect(g);
+      g.gain.setValueAtTime(0.28, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.07);
+      n3.start(t);
+    }
+  }
+  var sonHover = null;
+  btns.forEach(function (b) {
+    b.addEventListener("pointerenter", function () { if (sonHover !== b) { sonHover = b; calSes("hover"); } });
+    b.addEventListener("pointerleave", function () { sonHover = null; });
+    b.addEventListener("focus", function () { if (sonHover !== b) { sonHover = b; calSes("hover"); } });
+    b.addEventListener("click", function () { calSes("sec"); });
+  });
+
+
+  window.addEventListener("resize", function () {
+    olcekAyarla();
+    for (var i = 0; i < yapraklar.length; i++) yenidenBasla(yapraklar[i], true);
+  });
+})();
+</script>
+</body>
+</html>
